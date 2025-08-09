@@ -3,19 +3,47 @@ const html = document.documentElement;
 const storedTheme = localStorage.getItem('theme') || 'dark';
 if (storedTheme === 'light') html.classList.add('light');
 
-// Header morph: normal full-width rail -> centered glass box
+// Header FLIP animation: full-width -> centered glass
 const nav = document.getElementById('nav');
-function onScrollNav() {
-  if (window.scrollY > 46) {
-    if (!nav.classList.contains('nav-glass')) {
-      // ensure it's centered and smoothly slides in
-      nav.classList.add('nav-glass');
-    }
-  } else {
-    nav.classList.remove('nav-glass');
-  }
+const navShell = document.getElementById('navShell');
+let glassOn = false;
+
+function flipToggle(toGlass){
+  if (toGlass === glassOn) return;
+
+  // Preserve shell height to avoid layout jump
+  const h = nav.getBoundingClientRect().height;
+  navShell.style.height = toGlass ? `${h}px` : '';
+
+  // FLIP: First
+  const first = nav.getBoundingClientRect();
+
+  // Toggle state
+  nav.classList.toggle('nav-glass', toGlass);
+
+  // Last
+  const last = nav.getBoundingClientRect();
+
+  // Invert
+  const invertX = first.left - last.left;
+  const invertY = first.top - last.top;
+  const scaleX = first.width / last.width;
+  const scaleY = first.height / last.height;
+
+  // Animate
+  nav.animate([
+    { transform: `translate(${invertX}px, ${invertY}px) scale(${scaleX}, ${scaleY})` },
+    { transform: 'translate(0,0) scale(1,1)' }
+  ], { duration: 360, easing: 'cubic-bezier(0.22,0.61,0.36,1)' });
+
+  glassOn = toGlass;
 }
-window.addEventListener('scroll', onScrollNav, { passive: true });
+
+function onScrollNav(){
+  const shouldGlass = window.scrollY > 46;
+  flipToggle(shouldGlass);
+}
+window.addEventListener('scroll', onScrollNav, { passive:true });
 onScrollNav();
 
 // Quick Actions Overlay
@@ -66,7 +94,7 @@ initAction('pref_reduce_motion', document.getElementById('actMotion'), (on)=>{
   document.documentElement.style.setProperty('--prefers-reduced-motion', on?'reduce':'no-preference');
 });
 
-// Skills marquees
+// Skills marquees (seamless)
 const Adobe = [['ps','Ps','Photoshop'],['ai','Ai','Illustrator'],['id','Id','InDesign'],['ae','Ae','After Effects'],['pr','Pr','Premiere Pro'],['xd','Xd','Adobe XD'],['lr','Lr','Lightroom'],['fr','Fr','Fresco'],['acr','Ac','Acrobat']];
 const Code = [['html','HT','HTML5'],['css','CS','CSS3'],['js','JS','JavaScript'],['ts','TS','TypeScript'],['py','Py','Python'],['ml','ML','Machine Learning'],['react','Re','React'],['next','Nx','Next.js'],['node','Nd','Node.js'],['db','DB','PostgreSQL']];
 const General = [['gen','UX','UX'],['gen','UI','UI'],['gen','A11y','Accessibility'],['gen','Perf','Performance'],['gen','SEO','SEO'],['gen','Git','Git'],['gen','Agile','Agile'],['gen','Fig','Figma'],['gen','Nt','Notion'],['gen','Solve','Problem Solving']];
@@ -104,12 +132,14 @@ renderProjects(Projects);
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-// Education progress
+// Education progress — based on VIEWPORT CENTER
 const edu=document.getElementById('eduList');
 function updateEduProgress(){
-  const r=edu.getBoundingClientRect(), vh=innerHeight;
-  const start=Math.max(0,(vh*0.15)-r.top), range=r.height+vh*0.3;
-  edu.style.setProperty('--edu-progress', (Math.min(1,Math.max(0,start/range))*100).toFixed(1));
+  const rect=edu.getBoundingClientRect();
+  const center = window.scrollY + innerHeight/2;
+  const top = rect.top + window.scrollY;
+  const progress = Math.min(1, Math.max(0, (center - top) / rect.height ));
+  edu.style.setProperty('--edu-progress', (progress*100).toFixed(1));
 }
 updateEduProgress(); addEventListener('scroll',updateEduProgress,{passive:true}); addEventListener('resize',updateEduProgress,{passive:true});
 
