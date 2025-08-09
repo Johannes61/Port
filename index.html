@@ -9,82 +9,89 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <a href="#main" class="sr-only">Skip to content</a>
+  <a class="sr-only" href="#main">Skip to content</a>
 
-  <header class="container">
-    <div class="nav" id="nav">
+  <!-- Header -->
+  <header id="siteHeader">
+    <div class="container nav" id="nav">
       <div class="brand"><span class="dot"></span> Johannes</div>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#education">Education</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
       </nav>
-      <div class="right">
-        <button id="qaBtn" class="qa-btn" aria-haspopup="dialog" aria-expanded="false" title="Quick access (q)">
-          Quick Access <kbd>q</kbd>
-        </button>
-      </div>
+      <button id="qaBtn" class="qa-btn" aria-haspopup="dialog" aria-expanded="false" title="Quick access (Q)">
+        Quick Access <kbd>Q</kbd>
+      </button>
     </div>
+    <!-- Quick Access (sits under header) -->
+    <aside id="qaPanel" class="qa-panel" role="dialog" aria-modal="false" aria-label="Quick access settings">
+      <div class="qa-title">
+        <b>Action Center</b>
+        <button class="btn ghost" id="qaClose">Close</button>
+      </div>
+      <p class="qa-sub">Toggle quick preferences and discover shortcuts.</p>
+      <div class="qa-row">
+        <button class="action" id="actTheme"><span>Light Theme</span><b class="state">Off</b><small class="muted">Switch dark / light</small></button>
+        <button class="action" id="actFocus"><span>Focus</span><b class="state">Off</b><small class="muted">Dim chrome for reading</small></button>
+        <button class="action" id="actMotion"><span>Reduce Motion</span><b class="state">Off</b><small class="muted">Ease animations</small></button>
+      </div>
+      <div class="tips">
+        <h4>Shortcuts</h4>
+        <div class="tips-grid">
+          <div>Open/Close Quick Access</div><div><span class="kbd">Q</span> / <span class="kbd">Esc</span></div>
+          <div>Toggle Light Theme</div><div><span class="kbd">D</span></div>
+          <div>Toggle Focus</div><div><span class="kbd">F</span></div>
+        </div>
+      </div>
+    </aside>
   </header>
-
-  <!-- Quick Access (under header) -->
-  <aside id="qaPanel" class="qa-panel" role="dialog" aria-modal="false" aria-label="Quick access settings">
-    <div class="qa-title">
-      <div><b>Action Center</b></div>
-      <button class="btn ghost" id="qaClose">Close</button>
-    </div>
-    <div class="qa-sub">Toggle quick preferences and see handy shortcuts.</div>
-    <div class="qa-row">
-      <button class="action" id="actDark"><span>Light Theme</span><b class="state">Off</b><small class="muted">Switch between dark/light</small></button>
-      <button class="action" id="actFocus"><span>Focus</span><b class="state">Off</b><small class="muted">Dim chrome for reading</small></button>
-      <button class="action" id="actMotion"><span>Reduce Motion</span><b class="state">Off</b><small class="muted">Ease effects for comfort</small></button>
-    </div>
-    <div class="tips" style="margin-top:12px">
-      <h4>TIP: Shortcuts</h4>
-      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center">
-        <div>Open Quick Access</div><div><span class="kbd">Q</span></div>
-        <div>Close Quick Access</div><div><span class="kbd">Q</span> or <span class="kbd">Esc</span></div>
-        <div>Toggle Light Theme</div><div><span class="kbd">D</span></div>
-        <div>Toggle Focus</div><div><span class="kbd">F</span></div>
-      </div>
-    </div>
-  </aside>
 
   <main id="main">
     <!-- Hero -->
-    <section class="container hero reveal" id="about">
+    <section id="about" class="container hero reveal">
       <div class="pill-row">
         <span class="pill">The Developer</span>
         <span class="pill">Editor</span>
         <span class="pill">Graphic Design</span>
       </div>
-      <h1>Johannes Heller</h1>
-      <h1 style="font-weight:800">Full-Stack Developer</h1>
-      <p class="lead">Crafting clean, performant & responsive web experiences using modern technologies.</p>
+      <h1 class="title">Johannes Heller</h1>
+      <h2 class="subtitle">Full‑Stack Developer</h2>
+      <p class="lead">I craft clean, performant, and responsive web experiences with modern tech.</p>
       <div class="hero-cta">
         <a class="circle-btn" href="#contact" title="Let’s connect">⬇︎</a>
         <a class="circle-btn" href="https://github.com/johannes61" target="_blank" rel="noreferrer" title="GitHub">GH</a>
       </div>
     </section>
 
-    <!-- Skills (only marquees; middle reversed) -->
-    <section class="container" id="skills">
+    <!-- Skills (3 seamless marquees; middle reversed) -->
+    <section id="skills" class="container reveal">
+      <div class="section-title">
+        <h2>Skills</h2>
+        <span class="muted">What I use day to day</span>
+      </div>
       <div class="marquee-wrap"><div class="marquee" id="mq-adobe"></div></div>
       <div class="marquee-wrap"><div class="marquee" id="mq-code"></div></div>
       <div class="marquee-wrap"><div class="marquee" id="mq-general"></div></div>
     </section>
 
     <!-- Projects -->
-    <section class="container" id="projects">
-      <div class="section-title"><h2>My Projects</h2><span class="muted">A collection of builds & ideas</span></div>
+    <section id="projects" class="container reveal">
+      <div class="section-title">
+        <h2>My Projects</h2>
+        <span class="muted">A collection of builds & ideas</span>
+      </div>
       <div class="grid" id="projectGrid"></div>
     </section>
 
-    <!-- Education (vertical line with glow) -->
-    <section class="container" id="education">
-      <div class="section-title"><h2>Education</h2><span class="muted">Timeline</span></div>
+    <!-- Education (vertical timeline with glow progress) -->
+    <section id="education" class="container reveal">
+      <div class="section-title">
+        <h2>Education</h2>
+        <span class="muted">Timeline</span>
+      </div>
       <div class="card edu-card">
         <ol class="edu-vertical" id="eduList">
           <li><b>VG1</b> — Media & Information Technology — <i>Completed</i></li>
@@ -97,9 +104,12 @@
     </section>
 
     <!-- Contact -->
-    <section class="container" id="contact">
-      <div class="section-title"><h2>Contact</h2><span class="muted">I usually reply within a day</span></div>
-      <form class="card reveal contact-card" id="contactForm" onsubmit="return false" aria-label="Contact form">
+    <section id="contact" class="container reveal">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <span class="muted">I usually reply within a day</span>
+      </div>
+      <form class="card contact-card" id="contactForm" onsubmit="return false" aria-label="Contact form">
         <div class="contact-grid">
           <input class="chip input" required placeholder="Name" name="name" />
           <input class="chip input" required type="email" placeholder="Email" name="email" />
@@ -115,6 +125,7 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="container site-footer" id="footer">
     <div class="inner">
       <div>&copy; <span id="year"></span> Johannes Heller</div>
