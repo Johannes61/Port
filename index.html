@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Johannes Heller — Portfolio</title>
+  <meta name="description" content="Portfolio of Johannes Heller — full‑stack designer & developer in Oslo." />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    /* --- Base & Theme ---------------------------------------------------- */
+    :root{
+      --bg: #ffffff;
+      --text: #0b1020;
+      --muted: #5b647c;
+      --card: #f5f7fb;
+      --line: #e6e9f2;
+      --brand: #0a3dff;       /* deep, vibrant blue */
+      --brand-2: #00c263;     /* green accent */
+      --shadow: 0 10px 30px rgba(2, 17, 79, .08);
+      --radius: 18px;
+      --radius-sm: 12px;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg: #0b0e14;
+        --text: #e9eef7;
+        --muted: #a3b0cc;
+        --card: #111726;
+        --line: #1b2340;
+        --shadow: 0 10px 30px rgba(0,0,0,.45);
+      }
+    }
+    :root.dark{
+      --bg: #0b0e14;
+      --text: #e9eef7;
+      --muted: #a3b0cc;
+      --card: #111726;
+      --line: #1b2340;
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+      background:var(--bg);color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1160px;margin:0 auto;padding:0 20px}
+    .btn{display:inline-flex;align-items:center;gap:.55rem;background:var(--brand);color:#fff;border:0;padding:.8rem 1rem;border-radius:999px;font-weight:600;box-shadow:var(--shadow);transition:transform .15s ease,opacity .15s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.outline{background:transparent;border:1px solid var(--line);color:var(--text)}
+    .chip{display:inline-flex;align-items:center;padding:.35rem .6rem;border-radius:999px;background:linear-gradient(90deg,var(--line),transparent);border:1px solid var(--line);color:var(--muted);font-size:.8rem}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .kbd{border:1px solid var(--line);border-bottom-width:2px;padding:.1rem .45rem;border-radius:.4rem;background:var(--bg);font-family:ui-monospace,Menlo,monospace;font-size:.85rem}
+
+    /* --- Header ---------------------------------------------------------- */
+    header{
+      position:sticky;top:12px;z-index:50;backdrop-filter:saturate(120%) blur(10px);
+    }
+    .nav{
+      margin:12px auto;display:flex;align-items:center;justify-content:space-between;gap:10px;
+      background:color-mix(in oklab, var(--bg), transparent 20%);
+      border:1px solid var(--line);border-radius:999px;padding:.5rem .75rem;box-shadow:var(--shadow);
+    }
+    .logo{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px}
+    .logo-dot{width:10px;height:10px;border-radius:50%;background:var(--brand)}
+    .links{display:flex;gap:.25rem;align-items:center}
+    .links a{padding:.55rem .8rem;border-radius:999px}
+    .links a.active,.links a:hover{background:var(--card)}
+    .right{display:flex;gap:.35rem;align-items:center}
+    .icon-btn{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:999px;border:1px solid var(--line);background:var(--bg)}
+
+    /* --- Hero ------------------------------------------------------------ */
+    .hero{padding:80px 0 36px}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
+    .eyebrow{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+    h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.08;margin:.4rem 0 1rem}
+    .lead{font-size:1.1rem;color:var(--muted)}
+    .hero-cta{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:20px}
+    .hero-card{padding:18px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .metric{padding:16px;border-radius:var(--radius-sm);background:var(--bg);border:1px dashed var(--line);text-align:center}
+    .metric b{display:block;font-size:1.4rem}
+
+    /* --- Sections -------------------------------------------------------- */
+    section{padding:48px 0}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .section-title h2{font-size:1.6rem;margin:0}
+
+    /* --- Skills ---------------------------------------------------------- */
+    .skills{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .skill{grid-column:span 6;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px}
+    .skill .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--brand-2));width:0;transition:width 1s ease}
+    .skill .bar-wrap{height:10px;background:rgba(127,127,127,.15);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+
+    /* --- Projects -------------------------------------------------------- */
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}
+    .search{flex:1;min-width:220px;display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:.45rem .65rem;background:var(--bg)}
+    .search input{flex:1;border:0;outline:0;background:transparent;padding:.2rem .35rem;color:var(--text)}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tags .chip{cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .project{grid-column:span 6;overflow:hidden;position:relative}
+    .project .thumb{aspect-ratio:16/10;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#000}
+    .project .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,opacity .4s ease}
+    .project:hover .thumb img{transform:scale(1.04);opacity:.92}
+    .project .meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+    .project .meta h3{margin:0;font-size:1.05rem}
+
+    /* --- Experience ------------------------------------------------------ */
+    .timeline{position:relative;padding-left:24px}
+    .timeline:before{content:"";position:absolute;left:10px;top:4px;bottom:4px;width:2px;background:var(--line)}
+    .item{position:relative;margin:16px 0;padding:14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--card)}
+    .item:before{content:"";position:absolute;left:-5px;top:18px;width:10px;height:10px;border-radius:50%;background:var(--brand)}
+
+    /* --- Writing --------------------------------------------------------- */
+    .posts{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .post{grid-column:span 4;border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px;background:var(--card)}
+
+    /* --- Contact --------------------------------------------------------- */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .input{border:1px solid var(--line);border-radius:12px;padding:.8rem;background:var(--bg);color:var(--text)}
+    textarea.input{min-height:140px;resize:vertical}
+
+    /* --- Footer ---------------------------------------------------------- */
+    footer{padding:36px 0;border-top:1px solid var(--line);margin-top:42px}
+
+    /* --- Utilities & Responsive ----------------------------------------- */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media (max-width: 1024px){
+      .hero-grid{grid-template-columns:1fr}
+      .project{grid-column:span 12}
+      .skill{grid-column:span 12}
+      .post{grid-column:span 12}
+      .contact-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="sr-only">Skip to content</a>
+  <header>
+    <nav class="nav container" aria-label="Primary">
+      <div class="logo"><span class="logo-dot" aria-hidden="true"></span> Johannes</div>
+      <div class="links" role="list">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#writing">Writing</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="right">
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">🌗</button>
+        <a class="btn outline" href="mailto:johannes@lilleblad.com">Email</a>
+        <a class="btn" href="#projects">View Work</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero container" id="about">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Full‑stack Designer & Developer</div>
+          <h1>Crafting fast, elegant web experiences.</h1>
+          <p class="lead">I design and build modern, accessible products with a focus on performance, clarity, and feel. Based in Oslo, working globally.</p>
+          <div class="hero-cta">
+            <a class="btn" href="/resume.pdf" download>Download CV</a>
+            <a class="btn outline" href="#contact">Let's talk</a>
+          </div>
+        </div>
+        <div class="card hero-card">
+          <div class="grid-2">
+            <div class="metric"><b>98</b><span class="muted">Lighthouse Perf</span></div>
+            <div class="metric"><b>20+</b><span class="muted">Projects shipped</span></div>
+            <div class="metric"><b>6 yrs</b><span class="muted">Experience</span></div>
+            <div class="metric"><b>~50ms</b><span class="muted">TTI on SSR</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="container" id="skills">
+      <div class="section-title">
+        <h2>Skills</h2>
+        <span class="muted">Hover bars for values</span>
+      </div>
+      <div class="skills" role="list">
+        <!-- Repeatable skill items -->
+        <div class="skill" data-level="92"><strong>React</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="88"><strong>TypeScript</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="85"><strong>Next.js</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="90"><strong>Tailwind</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="82"><strong>Node.js</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="78"><strong>PostgreSQL</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="80"><strong>Prisma</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="76"><strong>Python</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="84"><strong>Figma</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+        <div class="skill" data-level="75"><strong>Framer Motion</strong><div class="bar-wrap" aria-hidden="true"><div class="bar"></div></div></div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="container" id="projects">
+      <div class="section-title">
+        <h2>Selected Projects</h2>
+        <div class="kbd">Tip: press <kbd class="kbd">/</kbd> to search</div>
+      </div>
+
+      <div class="toolbar">
+        <label class="search" aria-label="Search projects">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+          <input id="q" type="search" placeholder="Search projects…" autocomplete="off" />
+        </label>
+        <div class="tags" role="list" aria-label="Filter by tag">
+          <button class="chip" data-tag="All" aria-pressed="true">All</button>
+          <button class="chip" data-tag="Full‑stack">Full‑stack</button>
+          <button class="chip" data-tag="Frontend">Frontend</button>
+          <button class="chip" data-tag="Design">Design</button>
+          <button class="chip" data-tag="Dashboard">Dashboard</button>
+          <button class="chip" data-tag="Open Source">Open Source</button>
+        </div>
+      </div>
+
+      <div class="grid" id="projectGrid">
+        <!-- Project card template instances -->
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="container" id="experience">
+      <div class="section-title"><h2>Experience</h2><span class="muted">2019 — Present</span></div>
+      <div class="timeline">
+        <div class="item">
+          <b>Lille Blad · Product Designer/Engineer</b>
+          <div class="muted">Oslo · 2023 — Present</div>
+          <ul>
+            <li>Led design system and shipped performant Next.js experiences.</li>
+            <li>Built admin dashboards (analytics, uploads, theming).</li>
+            <li>Improved accessibility and Core Web Vitals across pages.</li>
+          </ul>
+        </div>
+        <div class="item">
+          <b>Independent · Designer & Developer</b>
+          <div class="muted">Remote · 2019 — 2023</div>
+          <ul>
+            <li>Delivered brand + web for startups across EU.</li>
+            <li>Prototyped micro‑interactions and rapid MVPs.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Writing -->
+    <section class="container" id="writing">
+      <div class="section-title"><h2>Writing</h2><a class="btn outline" href="#">All posts</a></div>
+      <div class="posts" id="posts"></div>
+    </section>
+
+    <!-- Contact -->
+    <section class="container" id="contact">
+      <div class="section-title"><h2>Contact</h2><span class="muted">I usually reply within a day</span></div>
+      <form class="card" id="contactForm" style="padding:16px" onsubmit="return false" aria-label="Contact form">
+        <div class="contact-grid">
+          <input class="input" required placeholder="Name" name="name" />
+          <input class="input" required type="email" placeholder="Email" name="email" />
+          <input class="input" placeholder="Company (optional)" name="company" />
+          <input class="input" placeholder="Subject" name="subject" />
+          <textarea class="input" required placeholder="Message" name="message"></textarea>
+        </div>
+        <div style="display:flex;gap:.6rem;justify-content:space-between;align-items:center;margin-top:10px">
+          <div class="muted">Or email <a href="mailto:johannes@lilleblad.com" class="chip">johannes@lilleblad.com</a></div>
+          <button class="btn" id="sendBtn">Send message</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <div class="muted">© <span id="year"></span> Johannes Heller. Built with <span aria-hidden>♥</span> vanilla HTML/CSS/JS.</div>
+      <div style="display:flex;gap:.4rem">
+        <a class="chip" href="https://github.com/your-handle" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="chip" href="https://www.linkedin.com/in/your-handle/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a class="chip" href="https://lilleblad.no" target="_blank" rel="noreferrer">Website</a>
+      </div>
+    </div>
+  </footer>
+
+  <template id="projectCard">
+    <article class="project">
+      <a class="thumb" href="#" target="_blank" rel="noreferrer">
+        <img alt="Project thumbnail" />
+      </a>
+      <div class="meta">
+        <h3></h3>
+        <div class="muted"></div>
+      </div>
+      <p class="muted"></p>
+      <div class="tags" style="margin-top:8px"></div>
+    </article>
+  </template>
+
+  <script>
+    // --- Data --------------------------------------------------------------
+    const ProjectData = [
+      {
+        title: "FORT — Local Delivery Platform",
+        blurb: "Two‑sided marketplace with real‑time tracking, store integrations, and modern design system.",
+        tags: ["Full‑stack", "Design"],
+        link: "#",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        title: "Portfolio Admin — CMS for Logos",
+        blurb: "Custom admin with drag‑and‑drop uploads, analytics, and theming.",
+        tags: ["Dashboard", "Frontend"],
+        link: "#",
+        image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        title: "Wayfinding — Seiersborg",
+        blurb: "Interactive gallery with responsive grid, crisp typography, and motion.",
+        tags: ["Frontend", "Design"],
+        link: "#",
+        image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        title: "Open Source — UI Toolkit",
+        blurb: "Accessible components with beautiful defaults and tokens.",
+        tags: ["Open Source", "Frontend"],
+        link: "#",
+        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop"
+      }
+    ];
+
+    const Posts = [
+      { title: "Designing with Intent: tiny details that scale", date: "2025‑06‑10", link: "#" },
+      { title: "Taming state: a practical guide to React patterns", date: "2025‑04‑21", link: "#" },
+      { title: "Shipping fast without breaking UX", date: "2025‑02‑03", link: "#" }
+    ];
+
+    // --- Theme toggle with persistence -----------------------------------
+    const html = document.documentElement;
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'dark') html.classList.add('dark');
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // --- Footer year ------------------------------------------------------
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Skills animation -------------------------------------------------
+    const skillObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const el = e.target; const pct = el.dataset.level;
+          const bar = el.querySelector('.bar');
+          bar.style.width = pct + '%';
+          bar.title = pct + '%';
+          skillObserver.unobserve(el);
+        }
+      })
+    },{threshold:.25});
+    document.querySelectorAll('.skill').forEach(el=>skillObserver.observe(el));
+
+    // --- Render projects --------------------------------------------------
+    const grid = document.getElementById('projectGrid');
+    const tpl = document.getElementById('projectCard');
+
+    function renderProjects(list){
+      grid.innerHTML = '';
+      list.forEach(p=>{
+        const node = tpl.content.cloneNode(true);
+        const a = node.querySelector('a.thumb');
+        const img = node.querySelector('img');
+        const h3 = node.querySelector('h3');
+        const meta = node.querySelector('.meta .muted');
+        const blurb = node.querySelector('p');
+        const tagWrap = node.querySelector('.tags');
+        a.href = p.link; img.src = p.image; img.alt = p.title + ' thumbnail';
+        h3.textContent = p.title; meta.textContent = p.tags.join(' · '); blurb.textContent = p.blurb;
+        p.tags.forEach(t=>{
+          const b = document.createElement('span'); b.className='chip'; b.textContent=t; tagWrap.appendChild(b);
+        });
+        grid.appendChild(node);
+      });
+    }
+    renderProjects(ProjectData);
+
+    // --- Search & Tag filtering ------------------------------------------
+    const searchInput = document.getElementById('q');
+    const tagButtons = Array.from(document.querySelectorAll('.tags .chip'));
+    let activeTag = 'All';
+
+    function applyFilters(){
+      const q = (searchInput.value || '').toLowerCase();
+      const filtered = ProjectData.filter(p=>{
+        const text = (p.title + ' ' + p.blurb + ' ' + p.tags.join(' ')).toLowerCase();
+        const tagOk = activeTag==='All' || p.tags.includes(activeTag);
+        return text.includes(q) && tagOk;
+      });
+      renderProjects(filtered);
+    }
+
+    tagButtons.forEach(btn=>btn.addEventListener('click',()=>{
+      tagButtons.forEach(b=>b.setAttribute('aria-pressed','false'));
+      btn.setAttribute('aria-pressed','true');
+      activeTag = btn.dataset.tag; applyFilters();
+    }));
+
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='/' && document.activeElement!==searchInput){ e.preventDefault(); searchInput.focus(); }
+    });
+    searchInput.addEventListener('input', applyFilters);
+
+    // --- Render posts -----------------------------------------------------
+    const postsWrap = document.getElementById('posts');
+    Posts.forEach(p=>{
+      const div = document.createElement('article');
+      div.className='post';
+      div.innerHTML = `<div class="muted">${p.date}</div><a href="${p.link}"><b>${p.title}</b></a>`;
+      postsWrap.appendChild(div);
+    });
+
+    // --- Contact form (demo only) ----------------------------------------
+    document.getElementById('sendBtn').addEventListener('click', ()=>{
+      const form = document.getElementById('contactForm');
+      const data = Object.fromEntries(new FormData(form).entries());
+      const ok = data.name && data.email && data.message;
+      if(!ok){ alert('Please fill in your name, email, and message.'); return; }
+      alert('Thanks ' + data.name + '! Your message has been queued.');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
