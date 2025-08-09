@@ -3,16 +3,22 @@ const html = document.documentElement;
 const storedTheme = localStorage.getItem('theme') || 'dark';
 if (storedTheme === 'light') html.classList.add('light');
 
-// Header: morph to glass on scroll (safe, no hiding)
+// Header morph: normal full-width rail -> centered glass box
 const nav = document.getElementById('nav');
-function onScrollNav(){
-  if (window.scrollY > 46) nav.classList.add('nav-glass');
-  else nav.classList.remove('nav-glass');
+function onScrollNav() {
+  if (window.scrollY > 46) {
+    if (!nav.classList.contains('nav-glass')) {
+      // ensure it's centered and smoothly slides in
+      nav.classList.add('nav-glass');
+    }
+  } else {
+    nav.classList.remove('nav-glass');
+  }
 }
-window.addEventListener('scroll', onScrollNav, { passive:true });
+window.addEventListener('scroll', onScrollNav, { passive: true });
 onScrollNav();
 
-// Quick Actions Overlay (closed by default, cannot cover when closed)
+// Quick Actions Overlay
 const qaBtn = document.getElementById('qaBtn');
 const qaOverlay = document.getElementById('qaOverlay');
 const qaClose = document.getElementById('qaClose');
@@ -26,7 +32,7 @@ function openQA(open){
 }
 qaBtn.addEventListener('click', ()=> openQA(!qaOverlay.classList.contains('open')));
 qaClose.addEventListener('click', ()=> openQA(false));
-qaOverlay.addEventListener('click', (e)=>{ if(e.target === qaOverlay) openQA(false); });
+qaOverlay.addEventListener('click', (e)=>{ if (e.target === qaOverlay) openQA(false); });
 document.addEventListener('keydown', (e)=>{
   const k = e.key.toLowerCase();
   if (k === 'escape') openQA(false);
@@ -60,7 +66,7 @@ initAction('pref_reduce_motion', document.getElementById('actMotion'), (on)=>{
   document.documentElement.style.setProperty('--prefers-reduced-motion', on?'reduce':'no-preference');
 });
 
-// Marquees
+// Skills marquees
 const Adobe = [['ps','Ps','Photoshop'],['ai','Ai','Illustrator'],['id','Id','InDesign'],['ae','Ae','After Effects'],['pr','Pr','Premiere Pro'],['xd','Xd','Adobe XD'],['lr','Lr','Lightroom'],['fr','Fr','Fresco'],['acr','Ac','Acrobat']];
 const Code = [['html','HT','HTML5'],['css','CS','CSS3'],['js','JS','JavaScript'],['ts','TS','TypeScript'],['py','Py','Python'],['ml','ML','Machine Learning'],['react','Re','React'],['next','Nx','Next.js'],['node','Nd','Node.js'],['db','DB','PostgreSQL']];
 const General = [['gen','UX','UX'],['gen','UI','UI'],['gen','A11y','Accessibility'],['gen','Perf','Performance'],['gen','SEO','SEO'],['gen','Git','Git'],['gen','Agile','Agile'],['gen','Fig','Figma'],['gen','Nt','Notion'],['gen','Solve','Problem Solving']];
@@ -72,7 +78,9 @@ function group(list){ const g=document.createElement('div'); g.className='group'
     c.append(l,n); g.append(c); }); return g; }
 function initMarquee(el, data, seconds, reverse=false){
   const lane=document.createElement('div'); lane.className='lane'; lane.style.setProperty('--dur', seconds+'s');
-  if(reverse) lane.style.animationDirection='reverse'; lane.append(group(data),group(data)); el.append(lane);
+  if(reverse) lane.style.animationDirection='reverse';
+  lane.append(group(data), group(data));
+  el.append(lane);
 }
 initMarquee(document.getElementById('mq-adobe'), Adobe, 22, false);
 initMarquee(document.getElementById('mq-code'), Code, 24, true);
@@ -116,7 +124,7 @@ document.getElementById('sendBtn').addEventListener('click', ()=>{
   form.reset();
 });
 
-// Footer helpers + visitors
+// Footer helpers + visitors (open tabs counter)
 document.getElementById('year').textContent=new Date().getFullYear();
 (function(){
   const KEY='__presence__', id=Math.random().toString(36).slice(2), ttl=15000, el=document.getElementById('visitorsCount');
