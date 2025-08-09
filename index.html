@@ -8,74 +8,76 @@
   <meta name="color-scheme" content="light dark" />
   <style>
     /* --- Theme & Base ---------------------------------------------------- */
-    :root{ --bg:#ffffff; --text:#0b1020; --muted:#5b647c; --card:#f5f7fb; --line:#e6e9f2; --brand:#0a3dff; --brand-2:#00c263; --shadow:0 10px 30px rgba(2,17,79,.08); --radius:18px; --radius-sm:12px; }
-    :root.dark{ --bg:#0b0e14; --text:#e9eef7; --muted:#a3b0cc; --card:#111726; --line:#1b2340; --shadow:0 10px 30px rgba(0,0,0,.45); }
+    :root{ --bg:#0b1020; --text:#e7ecf7; --muted:#9aa6c7; --card:#0f1528; --line:#1c2546; --brand:#7c5cff; --brand-2:#00c263; --shadow:0 10px 30px rgba(2,17,79,.25); --radius:18px; --radius-sm:12px; }
+    :root.light{ --bg:#ffffff; --text:#0b1020; --muted:#5b647c; --card:#f5f7fb; --line:#e6e9f2; --shadow:0 10px 30px rgba(2,17,79,.08); }
     *{box-sizing:border-box} html{scroll-behavior:smooth}
     body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
-    .container{max-width:1160px;margin:0 auto;padding:0 20px}
+    .container{max-width:1180px;margin:0 auto;padding:0 20px}
     .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--brand);color:#fff;border:0;padding:.65rem .9rem;border-radius:12px;font-weight:600;box-shadow:var(--shadow);transition:transform .15s ease,opacity .15s ease}
     .btn:hover{transform:translateY(-1px)}
     .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
-    .chip{display:inline-flex;align-items:center;padding:.35rem .6rem;border-radius:999px;background:linear-gradient(90deg,var(--line),transparent);border:1px solid var(--line);color:var(--muted);font-size:.8rem}
+    .chip{display:inline-flex;align-items:center;padding:.35rem .6rem;border-radius:999px;background:transparent;border:1px solid var(--line);color:var(--muted);font-size:.8rem}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
 
     /* --- Header ---------------------------------------------------------- */
     header{position:sticky;top:12px;z-index:60}
-    .nav{margin:12px auto}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:color-mix(in oklab,var(--bg),transparent 20%);backdrop-filter:saturate(120%) blur(10px);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:.5rem .75rem}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:color-mix(in oklab,var(--bg),transparent 15%);backdrop-filter:saturate(120%) blur(8px);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:.5rem .75rem}
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px}
     .dot{width:10px;height:10px;border-radius:50%;background:var(--brand)}
     .right{display:flex;gap:.5rem;align-items:center}
 
-    /* --- Quick Access Button + Panel (under header) --------------------- */
-    .qa-btn{display:inline-flex;align-items:center;gap:.45rem;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:.55rem .8rem;border-radius:10px;cursor:pointer}
-    .qa-btn kbd{border:1px solid var(--line);border-bottom-width:2px;padding:.05rem .35rem;border-radius:.35rem;background:var(--card);font-family:ui-monospace,Menlo,monospace;font-size:.78rem}
-    .qa-backdrop{position:fixed;inset:0;background:rgba(10,16,32,.55);backdrop-filter:blur(6px);display:none;z-index:70}
-    .qa-backdrop.open{display:block}
-    .qa-panel{position:fixed;right:18px;top:86px;width:360px;max-width:calc(100% - 36px);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:14px;display:none;z-index:80}
+    /* --- Quick Access (3 boxes, under header, no blur backdrop) ---------- */
+    .qa-btn{display:inline-flex;align-items:center;gap:.45rem;background:transparent;border:1px solid var(--line);color:var(--text);padding:.55rem .8rem;border-radius:10px;cursor:pointer}
+    .qa-btn kbd,.kbd{border:1px solid var(--line);border-bottom-width:2px;padding:.05rem .35rem;border-radius:.35rem;background:color-mix(in oklab,var(--bg),transparent 10%);font-family:ui-monospace,Menlo,monospace;font-size:.78rem}
+    .qa-panel{position:fixed;right:18px;top:86px;width:860px;max-width:calc(100% - 36px);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px;display:none;z-index:80}
     .qa-panel.open{display:block}
     .qa-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-    .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .action{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:12px;border-radius:14px;border:1px solid var(--line);background:color-mix(in oklab,var(--bg),transparent 8%);cursor:pointer}
+    .qa-sub{color:var(--muted);font-size:.9rem;margin:6px 0 12px}
+    .qa-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .action{display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:14px;border:1px solid var(--line);background:color-mix(in oklab,var(--bg),transparent 6%);cursor:pointer;min-height:92px}
     .action.active{background:var(--brand);color:#fff;border-color:transparent}
-    .action .state{opacity:.9;font-weight:700}
-
-    /* --- Focus mode ------------------------------------------------------ */
-    body.focus .qa-btn{opacity:.15;pointer-events:none}
+    .action .state{opacity:.92;font-weight:700}
+    .tips{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:12px;background:color-mix(in oklab,var(--bg),transparent 6%)}
+    .tips h4{margin:0 0 8px 0}
 
     /* --- Hero ------------------------------------------------------------ */
     .hero{padding:86px 0 36px}
     .eyebrow{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-    h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.08;margin:.4rem 0 1rem}
+    h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:.4rem 0 1rem}
     .lead{font-size:1.06rem;color:var(--muted)}
 
-    /* --- Skills marquees (full-bleed, no text) -------------------------- */
-    .marquee-wrap{overflow:hidden;border:0;border-radius:0;background:transparent;margin-inline:calc(50% - 50vw);width:100vw}
+    /* --- Skills marquees (full-bleed; seamless) ------------------------- */
+    .marquee-wrap{overflow:hidden;margin-inline:calc(50% - 50vw);width:100vw;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
     .marquee{display:flex;gap:12px;align-items:center;will-change:transform}
-    .track{display:flex;gap:12px;padding:10px}
+    .track{display:flex;gap:12px;padding:12px 10px}
     .logo-card{display:flex;align-items:center;gap:10px;background:transparent;border:0;border-radius:12px;padding:8px 10px;min-width:180px}
     .logo{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-weight:800;color:#fff}
     .logo.ps{background:#001E36} .logo.ai{background:#330000} .logo.id{background:#49021F} .logo.ae{background:#00005B} .logo.pr{background:#2D1155} .logo.xd{background:#470137} .logo.lr{background:#001E36} .logo.fr{background:#0A84FF} .logo.acr{background:#C3002F}
     .logo.html{background:#E44D26} .logo.css{background:#1572B6} .logo.js{background:#F7DF1E;color:#0b1020} .logo.ts{background:#3178C6} .logo.py{background:#3776AB} .logo.ml{background:#0A7} .logo.react{background:#20232A} .logo.next{background:#000} .logo.node{background:#3C873A} .logo.db{background:#336791}
     .logo.gen{background:#555}
 
-    /* --- Projects grid --------------------------------------------------- */
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-    .project{grid-column:span 4;overflow:hidden}
-    .project .thumb{aspect-ratio:16/10;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#000}
-    .project .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,opacity .4s ease}
-    .project:hover .thumb img{transform:scale(1.04);opacity:.92}
-    .project .meta{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
-    .project .meta h3{margin:0;font-size:1.05rem}
+    /* --- Projects grid (cards like screenshot) -------------------------- */
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .project{grid-column:span 6}
+    .project-card{border:1px solid var(--line);background:color-mix(in oklab,var(--bg),transparent 6%);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px}
+    .project .thumb{aspect-ratio:21/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0b0e14}
+    .project .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,opacity .4s ease}
+    .project:hover .thumb img{transform:scale(1.04);opacity:.94}
+    .project .meta{display:flex;align-items:center;justify-content:space-between;margin-top:2px}
+    .project .meta h3{margin:0;font-size:1.15rem}
+    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:.28rem .6rem;font-size:.82rem;color:var(--muted)}
     @media (max-width: 1024px){.project{grid-column:span 12}}
 
-    /* --- Education vertical timeline ------------------------------------ */
-    .edu-vertical{position:relative;margin:0;padding:0 0 0 28px;list-style:none}
-    .edu-vertical:before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--line)}
-    .edu-vertical li{position:relative;margin:14px 0;padding-left:2px}
-    .edu-vertical li:before{content:"";position:absolute;left:-6px;top:.45rem;width:12px;height:12px;border-radius:50%;background:var(--brand);box-shadow:var(--shadow)}
+    /* --- Education vertical timeline (bigger + progress) ---------------- */
+    :root{ --edu-progress:0; }
+    .edu-vertical{position:relative;margin:0;padding:0 0 0 48px;list-style:none;font-size:1.08rem}
+    .edu-vertical:before{content:"";position:absolute;left:18px;top:0;bottom:0;width:5px;background:var(--line);border-radius:6px}
+    .edu-vertical:after{content:"";position:absolute;left:18px;top:0;width:5px;height:calc(var(--edu-progress) * 1%);background:linear-gradient(180deg,var(--brand), var(--brand-2));box-shadow:0 0 12px rgba(124,92,255,.5);border-radius:6px}
+    .edu-vertical li{position:relative;margin:20px 0;padding-left:2px}
+    .edu-vertical li:before{content:"";position:absolute;left:-4px;top:.45rem;width:18px;height:18px;border-radius:50%;background:var(--brand);box-shadow:var(--shadow)}
 
     /* --- Dynamic reveal -------------------------------------------------- */
     .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease, transform .5s ease}
@@ -90,24 +92,32 @@
 </head>
 <body>
   <a href="#main" class="sr-only">Skip to content</a>
-  <header class="container nav">
+  <header class="container" style="margin-top:12px">
     <div class="nav-inner">
       <div class="brand"><span class="dot"></span> Johannes</div>
       <div class="right">
-        <button id="qaBtn" class="qa-btn" aria-haspopup="dialog" aria-expanded="false" title="Quick access (q)">Quick access <kbd>q</kbd></button>
+        <button id="qaBtn" class="qa-btn" aria-haspopup="dialog" aria-expanded="false" title="Quick access (q)">Quick Access <kbd>q</kbd></button>
       </div>
     </div>
   </header>
 
-  <!-- Quick Access under the header -->
-  <div id="qaBackdrop" class="qa-backdrop" aria-hidden="true"></div>
+  <!-- Quick Access (under header) -->
   <aside id="qaPanel" class="qa-panel" role="dialog" aria-modal="false" aria-label="Quick access settings">
-    <div class="qa-title"><b>Action Center</b><button class="btn ghost" id="qaClose">Close</button></div>
-    <div class="action-grid">
-      <button class="action" id="actDark"><span>Dark Mode</span><b class="state">Off</b></button>
+    <div class="qa-title"><div><b>Action Center</b></div><button class="btn ghost" id="qaClose">Close</button></div>
+    <div class="qa-sub">Toggle quick preferences and see handy shortcuts.</div>
+    <div class="qa-row">
+      <button class="action" id="actDark"><span>Dark Mode</span><b class="state">On</b></button>
       <button class="action" id="actFocus"><span>Focus</span><b class="state">Off</b></button>
       <button class="action" id="actMotion"><span>Reduce Motion</span><b class="state">Off</b></button>
-      <button class="action" id="actGrid"><span>Layout Grid</span><b class="state">Off</b></button>
+    </div>
+    <div class="tips">
+      <h4>TIP: Shortcuts</h4>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center">
+        <div>Open Quick Access</div><div><span class="kbd">Q</span></div>
+        <div>Close Quick Access</div><div><span class="kbd">Q</span> or <span class="kbd">Esc</span></div>
+        <div>Toggle Dark Mode</div><div><span class="kbd">D</span></div>
+        <div>Toggle Focus</div><div><span class="kbd">F</span></div>
+      </div>
     </div>
   </aside>
 
@@ -123,27 +133,29 @@
       </div>
     </section>
 
-    <!-- Skills only (3 looping rows; middle reversed) -->
+    <!-- Skills (only marquees; middle reversed) -->
     <section class="container" id="skills">
-      <div class="marquee-wrap" data-speed="0.6"><div class="marquee reveal" id="mq-adobe"></div></div>
-      <div class="marquee-wrap" data-speed="-0.6"><div class="marquee reveal" id="mq-code"></div></div>
-      <div class="marquee-wrap" data-speed="0.5"><div class="marquee reveal" id="mq-general"></div></div>
+      <div class="marquee-wrap"><div class="marquee reveal" id="mq-adobe"></div></div>
+      <div class="marquee-wrap"><div class="marquee reveal" id="mq-code"></div></div>
+      <div class="marquee-wrap"><div class="marquee reveal" id="mq-general"></div></div>
     </section>
 
     <!-- Projects -->
     <section class="container" id="projects">
-      <div class="section-title"><h2>Selected Projects</h2><span class="muted">Curated highlights</span></div>
+      <div class="section-title"><h2>My Projects</h2><span class="muted">A collection of builds & ideas</span></div>
       <div class="grid" id="projectGrid"></div>
     </section>
 
-    <!-- Education (vertical line) -->
+    <!-- Education (vertical line with glow) -->
     <section class="container" id="education">
       <div class="section-title"><h2>Education</h2><span class="muted">Timeline</span></div>
-      <div class="card" style="padding:16px">
-        <ol class="edu-vertical">
+      <div class="card" style="padding:18px">
+        <ol class="edu-vertical" id="eduList">
           <li><b>VG1</b> — Media & Information Technology — <i>Completed</i></li>
           <li><b>VG2</b> — Media — <i>Completed</i></li>
           <li><b>Folk High School</b> — Programming & Web Development — <i>Current</i></li>
+          <li><b>Certificate</b> — Front‑End Foundations (placeholder)</li>
+          <li><b>Workshop</b> — Intro to Data Science (placeholder)</li>
         </ol>
       </div>
     </section>
@@ -168,79 +180,71 @@
   </main>
 
   <script>
-    // --- Boot theme from localStorage ------------------------------------
-    const html = document.documentElement; const savedTheme = localStorage.getItem('theme'); if(savedTheme==='dark') html.classList.add('dark');
+    // --- Theme boot ------------------------------------------------------
+    const html = document.documentElement; const pref = localStorage.getItem('theme')||'dark'; if(pref==='light'){ html.classList.add('light'); }
 
-    // --- Quick Access under header ---------------------------------------
+    // --- Quick Access ----------------------------------------------------
     const qaBtn = document.getElementById('qaBtn');
     const qaPanel = document.getElementById('qaPanel');
     const qaClose = document.getElementById('qaClose');
-    const qaBackdrop = document.getElementById('qaBackdrop');
     const actDark = document.getElementById('actDark');
     const actFocus = document.getElementById('actFocus');
     const actMotion = document.getElementById('actMotion');
-    const actGrid = document.getElementById('actGrid');
 
-    function openQA(open){ qaPanel.classList.toggle('open', open); qaBackdrop.classList.toggle('open', open); qaBtn.setAttribute('aria-expanded', open?'true':'false'); }
+    const openQA = (open)=>{ qaPanel.classList.toggle('open', open); qaBtn.setAttribute('aria-expanded', open?'true':'false'); };
     qaBtn.addEventListener('click', ()=> openQA(!qaPanel.classList.contains('open')));
     qaClose.addEventListener('click', ()=> openQA(false));
-    qaBackdrop.addEventListener('click', ()=> openQA(false));
-    document.addEventListener('keydown', (e)=>{ if(e.key.toLowerCase()==='q'){ openQA(!qaPanel.classList.contains('open')); } if(e.key==='Escape'){ openQA(false);} });
+    document.addEventListener('keydown', (e)=>{ const k=e.key.toLowerCase(); if(k==='q') openQA(!qaPanel.classList.contains('open')); if(k==='escape') openQA(false); if(k==='d') actDark.click(); if(k==='f') actFocus.click(); });
 
+    const setActive = (btn, on)=>{ btn.classList.toggle('active', on); btn.querySelector('.state').textContent= on?'On':'Off'; };
+    const initAction = (key, btn, apply)=>{ const on = localStorage.getItem(key)==='1'; setActive(btn,on); if(on) apply(true); btn.addEventListener('click', ()=>{ const next=!btn.classList.contains('active'); setActive(btn,next); apply(next); localStorage.setItem(key, next?'1':'0'); }); };
+
+    initAction('pref_theme_light', actDark, (on)=>{ html.classList.toggle('light', on); localStorage.setItem('theme', on?'light':'dark'); });
+    initAction('pref_focus', actFocus, (on)=>{ document.body.classList.toggle('focus', on); });
+    initAction('pref_reduce_motion', actMotion, (on)=>{ document.documentElement.style.setProperty('--prefers-reduced-motion', on?'reduce':'no-preference'); });
+
+    // Re-position QA under header on scroll/resize
     function positionQA(){ const hdr = document.querySelector('header'); const rect = hdr.getBoundingClientRect(); const top = rect.bottom + window.scrollY + 8; qaPanel.style.top = top + 'px'; }
     window.addEventListener('resize', positionQA, {passive:true}); window.addEventListener('scroll', positionQA, {passive:true}); positionQA();
 
-    const setActive = (btn, on)=>{ btn.classList.toggle('active', on); btn.querySelector('.state').textContent = on?'On':'Off'; };
-    const initAction = (key, btn, apply)=>{ const on = localStorage.getItem(key)==='1'; setActive(btn, on); if(on) apply(true); btn.addEventListener('click',()=>{ const next=!btn.classList.contains('active'); setActive(btn,next); apply(next); localStorage.setItem(key, next?'1':'0'); }); };
-
-    // Theme / Focus / Motion / Grid
-    initAction('pref_theme_dark', actDark, (on)=>{ html.classList.toggle('dark', on); localStorage.setItem('theme', on?'dark':'light'); });
-    initAction('pref_focus', actFocus, (on)=>{ document.body.classList.toggle('focus', on); });
-    initAction('pref_reduce_motion', actMotion, (on)=>{ document.documentElement.style.setProperty('--prefers-reduced-motion', on?'reduce':'no-preference'); });
-    const applyGrid=(on)=>{ document.body.style.backgroundImage = on ? 'linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px)' : ''; document.body.style.backgroundSize = on ? '24px 24px' : ''; };
-    initAction('pref_grid', actGrid, applyGrid);
-
-    // --- Skills marquees (seamless loop; middle reversed) ----------------
+    // --- Skills marquees (seamless loop; middle reversed) ---------------
     const Adobe = [ ['ps','Ps','Photoshop'], ['ai','Ai','Illustrator'], ['id','Id','InDesign'], ['ae','Ae','After Effects'], ['pr','Pr','Premiere Pro'], ['xd','Xd','Adobe XD'], ['lr','Lr','Lightroom'], ['fr','Fr','Fresco'], ['acr','Ac','Acrobat'] ];
     const Code = [ ['html','HTML','HTML5'], ['css','CSS','CSS3'], ['js','JS','JavaScript'], ['ts','TS','TypeScript'], ['py','Py','Python'], ['ml','ML','Machine Learning'], ['react','⚛','React'], ['next','N','Next.js'], ['node','Nd','Node.js'], ['db','DB','PostgreSQL'] ];
     const General = [ ['gen','UX','UX'], ['gen','UI','UI'], ['gen','A11y','Accessibility'], ['gen','Perf','Performance'], ['gen','SEO','SEO'], ['gen','Git','Git'], ['gen','Agile','Agile'], ['gen','Fig','Figma'], ['gen','Nt','Notion'], ['gen','Solve','Problem Solving'] ];
 
     function buildTrack(list){
       const t=document.createElement('div'); t.className='track';
-      // Duplicate enough to exceed 2x viewport for smooth wrap
       const baseWidth = list.length*190; const reps = Math.max(3, Math.ceil((window.innerWidth*2)/baseWidth));
       for(let r=0;r<reps;r++) list.forEach(([cls,txt,label])=>{ const card=document.createElement('div'); card.className='logo-card'; card.title=label; const logo=document.createElement('div'); logo.className='logo '+cls; logo.textContent=txt; const name=document.createElement('div'); name.textContent=label; name.className='muted'; card.appendChild(logo); card.appendChild(name); t.appendChild(card); });
       return t;
     }
-
-    function initMarquee(el, data, pxPerSec){
-      const track = buildTrack(data); el.appendChild(track);
-      let x = 0; let last = performance.now(); const dir = pxPerSec>=0?1:-1; const speed = Math.abs(pxPerSec);
-      function loop(now){
-        const dt = (now - last)/1000; last = now; x -= dir*speed*dt; const w = track.scrollWidth; if(x <= -w) x += w; if(x >= w) x -= w; el.style.transform = `translateX(${x}px)`; requestAnimationFrame(loop);
-      }
-      requestAnimationFrame(loop);
-    }
-
+    function initMarquee(el, data, pxPerSec){ const track = buildTrack(data); el.appendChild(track); let x=0,last=performance.now(),dir=pxPerSec>=0?1:-1,s=Math.abs(pxPerSec); function loop(now){ const dt=(now-last)/1000; last=now; x-=dir*s*dt; const w=track.scrollWidth; if(x<=-w) x+=w; if(x>=w) x-=w; el.style.transform=`translateX(${x}px)`; requestAnimationFrame(loop);} requestAnimationFrame(loop); }
     initMarquee(document.getElementById('mq-adobe'), Adobe, 60);
     initMarquee(document.getElementById('mq-code'), Code, -55);
     initMarquee(document.getElementById('mq-general'), General, 45);
 
-    // --- Projects ---------------------------------------------------------
+    // --- Projects --------------------------------------------------------
     const ProjectData = [
-      {title:"FORT — Local Delivery Platform", blurb:"Two‑sided marketplace with real‑time tracking, store integrations, and a modern design system.", tags:["Full‑stack","Design"], link:"#", image:"https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop"},
-      {title:"Portfolio Admin — CMS for Logos", blurb:"Custom admin with drag‑and‑drop uploads, analytics, and theming.", tags:["Dashboard","Frontend"], link:"#", image:"https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=1200&auto=format&fit=crop"},
-      {title:"Wayfinding — Seiersborg", blurb:"Interactive gallery with responsive grid, crisp typography, and motion.", tags:["Frontend","Design"], link:"#", image:"https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop"}
+      {title:"ShopXIndia", blurb:"Microservices e‑commerce on AWS Fargate with CI/CD and observability.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1557825835-b4527f2423a7?q=80&w=1200&auto=format&fit=crop"},
+      {title:"SocialPedia", blurb:"Real‑time chat, JWT auth, responsive MERN application.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=80&w=1200&auto=format&fit=crop"},
+      {title:"FileShareX", blurb:"File sharing with QR codes and SMTP email integration.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200&auto=format&fit=crop"},
+      {title:"Portfolio", blurb:"Modern portfolio with Next.js, Tailwind, shadcn — deployed on Cloudflare.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"},
+      {title:"Scheduly.AI", blurb:"AI assistant for booking Google Calendar meetings.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1200&auto=format&fit=crop"}
     ];
     const grid=document.getElementById('projectGrid');
-    function renderProjects(list){ grid.innerHTML=''; list.forEach(p=>{ const art=document.createElement('article'); art.className='project reveal'; art.innerHTML=`<a class=\"thumb\" href=\"${p.link}\" target=\"_blank\" rel=\"noreferrer\"><img alt=\"${p.title}\" src=\"${p.image}\"/></a><div class=\"meta\"><h3>${p.title}</h3><div class=\"muted\">${p.tags.join(' · ')}</div></div><p class=\"muted\">${p.blurb}</p>`; grid.appendChild(art); }); }
+    function renderProjects(list){ grid.innerHTML=''; list.forEach(p=>{ const art=document.createElement('article'); art.className='project reveal'; art.innerHTML=`<div class=\"project-card\"><a class=\"thumb\" href=\"${p.link}\" target=\"_blank\" rel=\"noreferrer\"><img alt=\"${p.title}\" src=\"${p.image}\"/></a><div class=\"meta\"><h3>${p.title}</h3><div class=\"badges\">${p.tags.map(t=>`<span class=\\\"badge\\\">${t}</span>`).join('')}</div></div><p class=\"muted\">${p.blurb}</p></div>`; grid.appendChild(art); }); }
     renderProjects(ProjectData);
 
-    // --- Reveal on scroll -------------------------------------------------
-    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } }); }, {threshold:.2});
+    // --- Reveal on scroll ------------------------------------------------
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} }); }, {threshold:.2});
     document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-    // --- Contact demo -----------------------------------------------------
+    // --- Education progress glow ----------------------------------------
+    const edu = document.getElementById('eduList');
+    function updateEduProgress(){ const rect = edu.getBoundingClientRect(); const viewH = innerHeight; const start = Math.max(0, (viewH*0.15) - rect.top); const range = rect.height + viewH*0.3; const pct = Math.min(1, Math.max(0, start/range)); edu.style.setProperty('--edu-progress', (pct*100).toFixed(1)); }
+    updateEduProgress(); addEventListener('scroll', updateEduProgress, {passive:true}); addEventListener('resize', updateEduProgress, {passive:true});
+
+    // --- Contact demo ----------------------------------------------------
     document.getElementById('sendBtn').addEventListener('click', ()=>{ const form=document.getElementById('contactForm'); const data=Object.fromEntries(new FormData(form).entries()); if(!(data.name && data.email && data.message)){ alert('Please fill in your name, email, and message.'); return; } alert('Thanks '+data.name+'! Your message has been queued.'); form.reset(); });
   </script>
 </body>
