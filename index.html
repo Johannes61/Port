@@ -26,28 +26,41 @@
         Quick Access <kbd>Q</kbd>
       </button>
     </div>
-    <!-- Quick Access (sits under header) -->
-    <aside id="qaPanel" class="qa-panel" role="dialog" aria-modal="false" aria-label="Quick access settings">
-      <div class="qa-title">
+  </header>
+
+  <!-- Quick Actions Overlay (no box, blurred background) -->
+  <div id="qaOverlay" class="qa-overlay" aria-hidden="true">
+    <div class="qa-sheet" role="dialog" aria-modal="true" aria-label="Quick actions">
+      <div class="qa-head">
         <b>Action Center</b>
         <button class="btn ghost" id="qaClose">Close</button>
       </div>
-      <p class="qa-sub">Toggle quick preferences and discover shortcuts.</p>
-      <div class="qa-row">
-        <button class="action" id="actTheme"><span>Light Theme</span><b class="state">Off</b><small class="muted">Switch dark / light</small></button>
-        <button class="action" id="actFocus"><span>Focus</span><b class="state">Off</b><small class="muted">Dim chrome for reading</small></button>
-        <button class="action" id="actMotion"><span>Reduce Motion</span><b class="state">Off</b><small class="muted">Ease animations</small></button>
+
+      <div class="qa-actions">
+        <button class="qaction" id="actTheme" data-on="0">
+          <span class="qaction-title">Light Theme</span>
+          <span class="qaction-state">Off</span>
+          <span class="qaction-hint">Toggle dark / light <span class="kbd">D</span></span>
+        </button>
+        <button class="qaction" id="actFocus" data-on="0">
+          <span class="qaction-title">Focus</span>
+          <span class="qaction-state">Off</span>
+          <span class="qaction-hint">Dim chrome <span class="kbd">F</span></span>
+        </button>
+        <button class="qaction" id="actMotion" data-on="0">
+          <span class="qaction-title">Reduce Motion</span>
+          <span class="qaction-state">Off</span>
+          <span class="qaction-hint">Ease animations</span>
+        </button>
       </div>
-      <div class="tips">
-        <h4>Shortcuts</h4>
-        <div class="tips-grid">
-          <div>Open/Close Quick Access</div><div><span class="kbd">Q</span> / <span class="kbd">Esc</span></div>
-          <div>Toggle Light Theme</div><div><span class="kbd">D</span></div>
-          <div>Toggle Focus</div><div><span class="kbd">F</span></div>
-        </div>
+
+      <div class="qa-tips">
+        <div>Open/Close</div><div><span class="kbd">Q</span> / <span class="kbd">Esc</span></div>
+        <div>Light theme</div><div><span class="kbd">D</span></div>
+        <div>Focus</div><div><span class="kbd">F</span></div>
       </div>
-    </aside>
-  </header>
+    </div>
+  </div>
 
   <main id="main">
     <!-- Hero -->
@@ -58,7 +71,7 @@
         <span class="pill">Graphic Design</span>
       </div>
       <h1 class="title">Johannes Heller</h1>
-      <h2 class="subtitle">Full‑Stack Developer</h2>
+      <h2 class="subtitle">Full-Stack Developer</h2>
       <p class="lead">I craft clean, performant, and responsive web experiences with modern tech.</p>
       <div class="hero-cta">
         <a class="circle-btn" href="#contact" title="Let’s connect">⬇︎</a>
@@ -86,7 +99,7 @@
       <div class="grid" id="projectGrid"></div>
     </section>
 
-    <!-- Education (vertical timeline with glow progress) -->
+    <!-- Education -->
     <section id="education" class="container reveal">
       <div class="section-title">
         <h2>Education</h2>
@@ -109,18 +122,34 @@
         <h2>Contact</h2>
         <span class="muted">I usually reply within a day</span>
       </div>
-      <form class="card contact-card" id="contactForm" onsubmit="return false" aria-label="Contact form">
+      <form class="card contact-card" id="contactForm" onsubmit="return false" aria-label="Contact form" novalidate>
         <div class="contact-grid">
-          <input class="chip input" required placeholder="Name" name="name" />
-          <input class="chip input" required type="email" placeholder="Email" name="email" />
-          <input class="chip input" placeholder="Company (optional)" name="company" />
-          <input class="chip input" placeholder="Subject" name="subject" />
-          <textarea class="chip input" required placeholder="Message" name="message"></textarea>
+          <label class="field">
+            <span class="label">Name</span>
+            <input class="input" required name="name" placeholder="Your name" />
+          </label>
+          <label class="field">
+            <span class="label">Email</span>
+            <input class="input" required type="email" name="email" placeholder="you@example.com" />
+          </label>
+          <label class="field">
+            <span class="label">Company (optional)</span>
+            <input class="input" name="company" placeholder="Company" />
+          </label>
+          <label class="field">
+            <span class="label">Subject</span>
+            <input class="input" name="subject" placeholder="What’s this about?" />
+          </label>
+          <label class="field field--full">
+            <span class="label">Message</span>
+            <textarea class="input" required name="message" placeholder="Tell me a bit about your project"></textarea>
+          </label>
         </div>
         <div class="contact-actions">
           <div class="muted">Or email <a href="mailto:johannes@lilleblad.com" class="chip">johannes@lilleblad.com</a></div>
           <button class="btn" id="sendBtn">Send message</button>
         </div>
+        <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
       </form>
     </section>
   </main>

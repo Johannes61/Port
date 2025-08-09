@@ -5,66 +5,70 @@ if (storedTheme === 'light') html.classList.add('light');
 
 // Elements -------------------------------------------------------------
 const nav = document.getElementById('nav');
-const header = document.getElementById('siteHeader');
 const qaBtn = document.getElementById('qaBtn');
-const qaPanel = document.getElementById('qaPanel');
+const qaOverlay = document.getElementById('qaOverlay');
 const qaClose = document.getElementById('qaClose');
 const actTheme = document.getElementById('actTheme');
 const actFocus = document.getElementById('actFocus');
 const actMotion = document.getElementById('actMotion');
 
-// Header pop-out glass -------------------------------------------------
-function placeQAPanel() {
-  const rect = header.getBoundingClientRect();
-  const top = rect.bottom + window.scrollY + 8;
-  qaPanel.style.top = top + 'px';
-}
+// Header: full-width -> glass box on scroll ---------------------------
 function onScrollNav() {
   if (window.scrollY > 46) nav.classList.add('nav-glass');
   else nav.classList.remove('nav-glass');
-  placeQAPanel();
 }
 window.addEventListener('scroll', onScrollNav, { passive: true });
-window.addEventListener('resize', placeQAPanel, { passive: true });
 onScrollNav();
 
-// Quick Access toggling & shortcuts -----------------------------------
-const openQA = (open) => {
-  qaPanel.classList.toggle('open', open);
+// Quick Actions overlay (always visible, blurred background) ----------
+function setBodyLock(lock){
+  document.body.style.overflow = lock ? 'hidden' : '';
+}
+function openQA(open){
+  qaOverlay.classList.toggle('open', open);
+  qaOverlay.setAttribute('aria-hidden', open ? 'false' : 'true');
   qaBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-};
-qaBtn.addEventListener('click', () => openQA(!qaPanel.classList.contains('open')));
-qaClose?.addEventListener('click', () => openQA(false));
-document.addEventListener('keydown', (e) => {
+  setBodyLock(open);
+}
+qaBtn.addEventListener('click', ()=> openQA(!qaOverlay.classList.contains('open')));
+qaClose.addEventListener('click', ()=> openQA(false));
+qaOverlay.addEventListener('click', (e)=> {
+  // close if clicking outside the sheet
+  if(e.target === qaOverlay) openQA(false);
+});
+document.addEventListener('keydown', (e)=>{
   const k = e.key.toLowerCase();
-  if (k === 'q') openQA(!qaPanel.classList.contains('open'));
-  if (k === 'escape') openQA(false);
-  if (k === 'd') actTheme.click();
-  if (k === 'f') actFocus.click();
+  if(k==='escape') openQA(false);
+  if(k==='q') openQA(!qaOverlay.classList.contains('open'));
+  if(k==='d') actTheme.click();
+  if(k==='f') actFocus.click();
 });
 
-// Action boxes state ---------------------------------------------------
-function setActive(btn, on){
+// Action cards state helpers ------------------------------------------
+function setAction(btn, on){
+  btn.dataset.on = on ? '1' : '0';
   btn.classList.toggle('active', on);
-  const s = btn.querySelector('.state'); if (s) s.textContent = on ? 'On' : 'Off';
+  btn.querySelector('.qaction-state').textContent = on ? 'On' : 'Off';
 }
 function initAction(key, btn, apply){
   const on = localStorage.getItem(key) === '1';
-  setActive(btn, on); if (on) apply(true);
+  setAction(btn, on);
+  if(on) apply(true);
   btn.addEventListener('click', ()=>{
-    const next = !btn.classList.contains('active');
-    setActive(btn, next); apply(next);
+    const next = btn.dataset.on !== '1';
+    setAction(btn, next);
     localStorage.setItem(key, next ? '1' : '0');
+    apply(next);
   });
 }
-initAction('pref_theme_light', actTheme, (on)=> {
+initAction('pref_theme_light', actTheme, (on)=>{
   html.classList.toggle('light', on);
   localStorage.setItem('theme', on ? 'light' : 'dark');
 });
-initAction('pref_focus', actFocus, (on)=> {
+initAction('pref_focus', actFocus, (on)=>{
   document.body.classList.toggle('focus', on);
 });
-initAction('pref_reduce_motion', actMotion, (on)=> {
+initAction('pref_reduce_motion', actMotion, (on)=>{
   document.documentElement.style.setProperty('--prefers-reduced-motion', on ? 'reduce' : 'no-preference');
 });
 
@@ -84,7 +88,6 @@ const General = [
   ['gen','SEO','SEO'], ['gen','Git','Git'], ['gen','Agile','Agile'], ['gen','Fig','Figma'],
   ['gen','Nt','Notion'], ['gen','Solve','Problem Solving']
 ];
-
 function group(list){
   const g=document.createElement('div'); g.className='group';
   list.forEach(([cls,txt,label])=>{
@@ -107,10 +110,10 @@ initMarquee(document.getElementById('mq-general'), General, 28, false);
 
 // Projects -------------------------------------------------------------
 const Projects = [
-  {title:"Buxo", blurb:"SOL account‑reclaiming memecoin tool with an active, trusted community.", tags:[{t:"Live", href:"https://buxohq.com/"}], link:"https://buxohq.com/", image:"https://images.unsplash.com/photo-1621768216002-5ac171876625?q=80&w=1200&auto=format&fit=crop"},
-  {title:"Fav‑Board", blurb:"Fast bookmarks board — pin, search & jump.", tags:[{t:"Live", href:"https://johannes61.github.io/Fav-Board/"},{t:"GitHub", href:"https://github.com/johannes61/Fav-Board"}], link:"https://johannes61.github.io/Fav-Board/", image:"https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop"},
-  {title:"Repo‑Radar", blurb:"Discover & track repositories at a glance.", tags:[{t:"Live", href:"https://johannes61.github.io/Repo-Radar/"},{t:"GitHub", href:"https://github.com/johannes61/Repo-Radar"}], link:"https://johannes61.github.io/Repo-Radar/", image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"},
-  {title:"Ping‑Board", blurb:"Minimal network pinger dashboard.", tags:[{t:"Live", href:"https://johannes61.github.io/Ping-Board/"},{t:"GitHub", href:"https://github.com/johannes61/Ping-Board"}], link:"https://johannes61.github.io/Ping-Board/", image:"https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop"}
+  {title:"Buxo", blurb:"SOL account-reclaiming memecoin tool with an active, trusted community.", tags:[{t:"Live", href:"https://buxohq.com/"}], link:"https://buxohq.com/", image:"https://images.unsplash.com/photo-1621768216002-5ac171876625?q=80&w=1200&auto=format&fit=crop"},
+  {title:"Fav-Board", blurb:"Fast bookmarks board — pin, search & jump.", tags:[{t:"Live", href:"https://johannes61.github.io/Fav-Board/"},{t:"GitHub", href:"https://github.com/johannes61/Fav-Board"}], link:"https://johannes61.github.io/Fav-Board/", image:"https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop"},
+  {title:"Repo-Radar", blurb:"Discover & track repositories at a glance.", tags:[{t:"Live", href:"https://johannes61.github.io/Repo-Radar/"},{t:"GitHub", href:"https://github.com/johannes61/Repo-Radar"}], link:"https://johannes61.github.io/Repo-Radar/", image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"},
+  {title:"Ping-Board", blurb:"Minimal network pinger dashboard.", tags:[{t:"Live", href:"https://johannes61.github.io/Ping-Board/"},{t:"GitHub", href:"https://github.com/johannes61/Ping-Board"}], link:"https://johannes61.github.io/Ping-Board/", image:"https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop"}
 ];
 const grid=document.getElementById('projectGrid');
 function renderProjects(list){
@@ -148,16 +151,24 @@ updateEduProgress();
 addEventListener('scroll',updateEduProgress,{passive:true});
 addEventListener('resize',updateEduProgress,{passive:true});
 
-// Contact demo ---------------------------------------------------------
+// Contact form UX ------------------------------------------------------
+const form = document.getElementById('contactForm');
+const note = document.getElementById('formNote');
 document.getElementById('sendBtn').addEventListener('click', ()=>{
-  const form=document.getElementById('contactForm');
   const data=Object.fromEntries(new FormData(form).entries());
   if(!(data.name && data.email && data.message)){
-    alert('Please fill in your name, email, and message.');
+    note.textContent = 'Please fill name, email, and message.';
+    note.style.color = '#ffb3b3';
+    form.querySelectorAll('[required]').forEach(el=>{
+      if(!el.value.trim()) el.classList.add('invalid');
+      else el.classList.remove('invalid');
+    });
     return;
   }
-  alert('Thanks '+data.name+'! Your message has been queued.');
+  note.textContent = 'Thanks! Your message has been queued.';
+  note.style.color = '';
   form.reset();
+  form.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
 });
 
 // Footer helpers -------------------------------------------------------
