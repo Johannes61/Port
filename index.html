@@ -32,27 +32,24 @@
     .right{display:flex;gap:.5rem;align-items:center}
     .nav-pop{position:fixed;left:50%;transform:translateX(-50%);top:10px;width:min(1180px,calc(100% - 24px));background:color-mix(in oklab,var(--bg),transparent 15%);backdrop-filter:saturate(120%) blur(10px);border:1px solid var(--line);box-shadow:var(--shadow)}
 
-    /* --- Quick Access (3 boxes, under header; no blur) ------------------ */
-    .qa-btn{display:inline-flex;align-items:center;gap:.45rem;background:transparent;border:1px solid var(--line);color:var(--text);padding:.55rem .8rem;border-radius:10px;cursor:pointer}
-    .qa-btn kbd,.kbd{border:1px solid var(--line);border-bottom-width:2px;padding:.05rem .35rem;border-radius:.35rem;background:color-mix(in oklab,var(--bg),transparent 10%);font-family:ui-monospace,Menlo,monospace;font-size:.78rem}
-    .qa-panel{position:fixed;right:18px;top:86px;width:860px;max-width:calc(100% - 36px);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px;display:none;z-index:80}
+    /* --- Quick Access (appealing 3-box panel) --------------------------- */
+    .qa-btn{display:inline-flex;align-items:center;gap:.45rem;background:transparent;border:1px solid var(--line);color:var(--text);padding:.55rem .9rem;border-radius:12px;cursor:pointer}
+    .qa-btn kbd,.kbd{border:1px solid var(--line);border-bottom-width:2px;padding:.05rem .35rem;border-radius:.45rem;background:color-mix(in oklab,var(--bg),transparent 10%);font-family:ui-monospace,Menlo,monospace;font-size:.78rem}
+    .qa-panel{position:fixed;right:18px;top:86px;width:900px;max-width:calc(100% - 36px);background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px;display:none;z-index:80}
     .qa-panel.open{display:block}
-    .qa-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-    .qa-sub{color:var(--muted);font-size:.9rem;margin:6px 0 12px}
-    .qa-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .action{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:14px;border:1px solid var(--line);background:color-mix(in oklab,var(--bg),transparent 6%);cursor:pointer;min-height:104px}
-    .action.active{background:var(--brand);color:#fff;border-color:transparent}
-    .action .state{opacity:.92;font-weight:700}
-    .tips{margin-top:14px;border:1px solid var(--line);border-radius:14px;padding:12px;background:color-mix(in oklab,var(--bg),transparent 6%)}
-    .tips h4{margin:0 0 8px 0}
-
-    /* --- Hero ------------------------------------------------------------ */
-    .hero{padding:120px 0 56px}
-    h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:.35rem 0}
+    .qa-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .qa-sub{color:var(--muted);font-size:.95rem;margin:6px 0 14px}
+    .qa-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+   parent 6%), color-mix(in oklab,var(--bg),transparent 14%));cursor:pointer;min-height:120px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);transition:transform .2s ease}
+    .action:hover{transform:translateY(-1px)}
+    .action.active{background:linear-gradient(180deg, color-mix(in oklab,var(--brand),black 75%), color-mix(in oklab,var(--brand),black 55%));color:#fff;border-color:transparent}
+    .action .state{opacity:.92;font-weight:800}
+    .tips{margin-top:16px;border:1px solid var(--line);border-radius:16px;padding:14px;background:color-mix(in oklab,v-- Hero (centered) ------------------------------------------------ */
+    .hero{padding:140px 0 72px; text-align:center}
+    h1{font-size:clamp(2rem,5vw,3.8rem);line-height:1.08;margin:.35rem 0}
     .lead{font-size:1.06rem;color:var(--muted)}
-    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-    .pill{display:inline-flex;align-items:center;gap:.4rem;padding:.25rem .55rem;border-radius:999px;border:1px solid var(--line);background:color-mix(in oklab,var(--bg),transparent 10%);font-size:.82rem}
-    .circle-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:transparent;box-shadow:var(--shadow)}
+    .pill-row{display:flex;gap:10px;flex-wrap:wrap;margab,var(--bg),transparent 10%);font-size:.82rem}
+    .circle-btn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:999px;border:1px solid var(--line);background:transparent;box-shadow:var(--shadow)}
 
     /* --- Skills marquees (CSS seamless) --------------------------------- */
     .marquee-wrap{overflow:hidden;margin-inline:calc(50% - 50vw);width:100vw;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -66,10 +63,11 @@
     .logo.html{background:#E44D26} .logo.css{background:#1572B6} .logo.js{background:#F7DF1E;color:#0b1020} .logo.ts{background:#3178C6} .logo.py{background:#3776AB} .logo.ml{background:#0A7} .logo.react{background:#20232A} .logo.next{background:#000} .logo.node{background:#3C873A} .logo.db{background:#336791}
     .logo.gen{background:#555}
 
-    /* --- Projects grid --------------------------------------------------- */
+    /* --- Projects grid (centered title) --------------------------------- */
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
     .project{grid-column:span 6}
-    .project-card{border:1px solid var(--line);background:color-mix(in oklab,var(--bg),transparent 6%);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
+    .project-card{border:1px solid var(--line);background:color-mix(in oklab,var(--bg),transparent 6%);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px;transition:transform .2s ease}
+    .project-card:hover{transform:translateY(-2px)}
     .project .thumb{aspect-ratio:21/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#0b0e14}
     .project .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease,opacity .4s ease}
     .project:hover .thumb img{transform:scale(1.04);opacity:.94}
@@ -84,17 +82,15 @@
     .edu-vertical{position:relative;margin:0;padding:0 0 0 64px;list-style:none;font-size:1.1rem}
     .edu-vertical:before{content:"";position:absolute;left:28px;top:0;bottom:0;width:6px;background:var(--line);border-radius:6px}
     .edu-vertical:after{content:"";position:absolute;left:28px;top:0;width:6px;height:calc(var(--edu-progress) * 1%);background:linear-gradient(180deg,var(--brand), var(--brand-2));box-shadow:0 0 12px rgba(124,92,255,.5);border-radius:6px}
-    .edu-vertical li{position:relative;margin:22px 0;padding-left:12px}
-    .edu-vertical li:before{content:"";position:absolute;left:-6px;top:.35rem;width:18px;height:18px;border-radius:50%;background:var(--brand);box-shadow:var(--shadow)}
+    .edu-vertical li{position:relative;margin:22px 0;padding-left:16px}
+    .edu-vertical li:before{content:"";position:absolute;left:-2px;top:.35rem;width:18px;height:18px;border-radius:50%;background:var(--brand);box-shadow:var(--shadow)}
 
     /* --- Dynamic reveal -------------------------------------------------- */
-    .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease, transform .5s ease}
-    .reveal.show{opacity:1;transform:none}
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease, transform .5s epacity:1;transform:none}
 
-    /* --- Sections -------------------------------------------------------- */
-    section{padding:48px 0}
-    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-    .section-title h2{margin:0;font-size:1.6rem}
+  :84px 0}
+    .section-title{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;margin-bottom:26px}
+    .section-title h2{margin:0;font-size:1.8rem}
     .muted{color:var(--muted)}
   </style>
 </head>
@@ -106,7 +102,7 @@
       <nav class="nav-links">
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
-        <a href="#education">Education</a>
+        <a href="#ed>Education</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -147,7 +143,7 @@
       <h1>Johannes Heller</h1>
       <h1 style="font-weight:800">Full‑Stack Developer</h1>
       <p class="lead">Crafting clean, performant & responsive web experiences using modern technologies.</p>
-      <div style="display:flex;gap:.8rem;align-items:center;margin-top:18px">
+      <div style="display:flex;gap:.8rem;align-items:center;justify-content:center;margin-top:18px">
         <a class="circle-btn" href="#contact" title="Let’s connect">⬇︎</a>
         <a class="circle-btn" href="https://github.com/johannes61" target="_blank" rel="noreferrer" title="GitHub">GH</a>
       </div>
@@ -169,7 +165,7 @@
     <!-- Education (vertical line with glow) -->
     <section class="container" id="education">
       <div class="section-title"><h2>Education</h2><span class="muted">Timeline</span></div>
-      <div class="card" style="padding:22px">
+      <div class="card" style="padding:26px">
         <ol class="edu-vertical" id="eduList">
           <li><b>VG1</b> — Media & Information Technology — <i>Completed</i></li>
           <li><b>VG2</b> — Media — <i>Completed</i></li>
@@ -183,15 +179,15 @@
     <!-- Contact -->
     <section class="container" id="contact">
       <div class="section-title"><h2>Contact</h2><span class="muted">I usually reply within a day</span></div>
-      <form class="card reveal" id="contactForm" style="padding:24px" onsubmit="return false" aria-label="Contact form">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+      <form class="card reveal" id="contactForm" style="padding:28px" onsubmit="return false" aria-label="Contact form">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
           <input class="chip input" required placeholder="Name" name="name" />
           <input class="chip input" required type="email" placeholder="Email" name="email" />
           <input class="chip input" placeholder="Company (optional)" name="company" />
           <input class="chip input" placeholder="Subject" name="subject" />
-          <textarea class="chip input" required placeholder="Message" name="message" style="min-height:200px;grid-column:1 / -1"></textarea>
+          <textarea class="chip input" required placeholder="Message" name="message" style="min-height:220px;grid-column:1 / -1"></textarea>
         </div>
-        <div style="display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap">
+        <div style="display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap">
           <div class="muted">Or email <a href="mailto:johannes@lilleblad.com" class="chip">johannes@lilleblad.com</a></div>
           <button class="btn" id="sendBtn">Send message</button>
         </div>
@@ -243,14 +239,15 @@
 
     // --- Projects --------------------------------------------------------
     const ProjectData = [
-      {title:"ShopXIndia", blurb:"Microservices e‑commerce on AWS Fargate with CI/CD and observability.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1557825835-b4527f2423a7?q=80&w=1200&auto=format&fit=crop"},
-      {title:"SocialPedia", blurb:"Real‑time chat, JWT auth, responsive MERN application.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=80&w=1200&auto=format&fit=crop"},
-      {title:"FileShareX", blurb:"File sharing with QR codes and SMTP email integration.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1200&auto=format&fit=crop"},
-      {title:"Portfolio", blurb:"Modern portfolio with Next.js, Tailwind, shadcn — deployed on Cloudflare.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"},
-      {title:"Scheduly.AI", blurb:"AI assistant for booking Google Calendar meetings.", tags:["GitHub","Live"], link:"#", image:"https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=1200&auto=format&fit=crop"}
-    ];
-    const grid=document.getElementById('projectGrid');
-    function renderProjects(list){ grid.innerHTML=''; list.forEach(p=>{ const art=document.createElement('article'); art.className='project reveal'; art.innerHTML=`<div class=\"project-card\"><a class=\"thumb\" href=\"${p.link}\" target=\"_blank\" rel=\"noreferrer\"><img alt=\"${p.title}\" src=\"${p.image}\"/></a><div class=\"meta\"><h3>${p.title}</h3><div class=\"badges\">${p.tags.map(t=>`<span class=\\\"badge\\\">${t}</span>`).join('')}</div></div><p class=\"muted\">${p.blurb}</p></div>`; grid.appendChild(art); }); }
+      {title:"Buxo", blurb:"SOL account‑reclaiming memecoin tool with an active, trusted community.", tags:[{t:"Live", href:"https://buxohq.com/"}], link:"https://buxohq.com/", image:"https://images.unsplash.com/photo-1621768216002-5ac171876625?q=80&w=1200&auto=format&fit=crop"},
+;
+      list.forEach(p=>{
+        const art=document.createElement('article'); art.className='project reveal';
+        const badges = (p.tags||[]).map(o=>`<a class=\"badge\" href=\"${o.href}\" target=\"_blank\" rel=\"noreferrer\">${o.t}</a>`).join('');
+        art.innerHTML=`<div class=\"project-card\"><a class=\"thumb\" href=\"${p.link}\" target=\"_blank\" rel=\"noreferrer\"><img alt=\"${p.title}\" src=\"${p.image}\"/></a><div class=\"meta\"><h3>${p.title}</h3><div class=\"badges\">${badges}</div></div><p class=\"muted\">${p.blurb}</p></div>`;
+        grid.appendChild(art);
+      });
+    }
     renderProjects(ProjectData);
 
     // --- Reveal on scroll ------------------------------------------------
@@ -260,7 +257,7 @@
     // --- Education progress glow ----------------------------------------
     const edu = document.getElementById('eduList');
     function updateEduProgress(){ const rect = edu.getBoundingClientRect(); const viewH = innerHeight; const start = Math.max(0, (viewH*0.15) - rect.top); const range = rect.height + viewH*0.3; const pct = Math.min(1, Math.max(0, start/range)); edu.style.setProperty('--edu-progress', (pct*100).toFixed(1)); }
-    updateEduProgress(); addEventListener('scroll', updateEduProgress, {passive:true}); addEventListener('resize', updateEduProgress, {passive:true});
+    updateEduProgress(); addEventListener('scroive:true}); addEventListener('resize', updateEduProgress, {passive:true});
 
     // --- Contact demo ----------------------------------------------------
     document.getElementById('sendBtn').addEventListener('click', ()=>{ const form=document.getElementById('contactForm'); const data=Object.fromEntries(new FormData(form).entries()); if(!(data.name && data.email && data.message)){ alert('Please fill in your name, email, and message.'); return; } alert('Thanks '+data.name+'! Your message has been queued.'); form.reset(); });
