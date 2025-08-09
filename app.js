@@ -3,7 +3,7 @@ const html = document.documentElement;
 const storedTheme = localStorage.getItem('theme') || 'dark';
 if (storedTheme === 'light') html.classList.add('light');
 
-// Header FLIP animation: full-width -> centered glass
+// Header FLIP animation: form-in-place (no side jump)
 const nav = document.getElementById('nav');
 const navShell = document.getElementById('navShell');
 let glassOn = false;
@@ -15,30 +15,37 @@ function flipToggle(toGlass){
   const h = nav.getBoundingClientRect().height;
   navShell.style.height = toGlass ? `${h}px` : '';
 
-  // FLIP: First
+  // FIRST
   const first = nav.getBoundingClientRect();
 
-  // Toggle state
+  // Toggle state (sets fixed centered "glass" or normal)
   nav.classList.toggle('nav-glass', toGlass);
 
-  // Last
+  // LAST
   const last = nav.getBoundingClientRect();
 
   // Invert
-  const invertX = first.left - last.left;
-  const invertY = first.top - last.top;
-  const scaleX = first.width / last.width;
-  const scaleY = first.height / last.height;
+  const dx = (first.left + first.width/2) - (last.left + last.width/2); // center-to-center
+  const dy = (first.top + first.height/2) - (last.top + last.height/2);
+  const sx = first.width / last.width;
+  const sy = first.height / last.height;
 
-  // Animate
+  // Animate container
   nav.animate([
-    { transform: `translate(${invertX}px, ${invertY}px) scale(${scaleX}, ${scaleY})` },
-    { transform: 'translate(0,0) scale(1,1)' }
-  ], { duration: 360, easing: 'cubic-bezier(0.22,0.61,0.36,1)' });
+    { transformOrigin: 'center top', transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, borderRadius: toGlass ? '0px' : '16px', backdropFilter: 'blur(0px)' },
+    { transformOrigin: 'center top', transform: 'translate(0,0) scale(1,1)', borderRadius: toGlass ? '16px' : '0px', backdropFilter: toGlass ? 'blur(10px)' : 'blur(0px)' }
+  ], { duration: 380, easing: 'cubic-bezier(0.22,0.61,0.36,1)' });
+
+  // Animate inner content to "tuck in"
+  Array.from(nav.children).forEach((child,i)=>{
+    child.animate([
+      { opacity: 0.85, transform: 'translateY(-6px)' },
+      { opacity: 1, transform: 'translateY(0px)' }
+    ], { duration: 260 + i*30, easing: 'ease-out' });
+  });
 
   glassOn = toGlass;
 }
-
 function onScrollNav(){
   const shouldGlass = window.scrollY > 46;
   flipToggle(shouldGlass);
@@ -46,7 +53,7 @@ function onScrollNav(){
 window.addEventListener('scroll', onScrollNav, { passive:true });
 onScrollNav();
 
-// Quick Actions Overlay
+// Quick Actions Overlay (purple theme)
 const qaBtn = document.getElementById('qaBtn');
 const qaOverlay = document.getElementById('qaOverlay');
 const qaClose = document.getElementById('qaClose');
@@ -69,7 +76,7 @@ document.addEventListener('keydown', (e)=>{
   if (k === 'f') document.getElementById('actFocus').click();
 });
 
-// Action states
+// Quick Actions state (all purple style, consistent)
 function setAction(btn, on){
   btn.dataset.on = on ? '1' : '0';
   btn.classList.toggle('active', on);
@@ -98,7 +105,6 @@ initAction('pref_reduce_motion', document.getElementById('actMotion'), (on)=>{
 const Adobe = [['ps','Ps','Photoshop'],['ai','Ai','Illustrator'],['id','Id','InDesign'],['ae','Ae','After Effects'],['pr','Pr','Premiere Pro'],['xd','Xd','Adobe XD'],['lr','Lr','Lightroom'],['fr','Fr','Fresco'],['acr','Ac','Acrobat']];
 const Code = [['html','HT','HTML5'],['css','CS','CSS3'],['js','JS','JavaScript'],['ts','TS','TypeScript'],['py','Py','Python'],['ml','ML','Machine Learning'],['react','Re','React'],['next','Nx','Next.js'],['node','Nd','Node.js'],['db','DB','PostgreSQL']];
 const General = [['gen','UX','UX'],['gen','UI','UI'],['gen','A11y','Accessibility'],['gen','Perf','Performance'],['gen','SEO','SEO'],['gen','Git','Git'],['gen','Agile','Agile'],['gen','Fig','Figma'],['gen','Nt','Notion'],['gen','Solve','Problem Solving']];
-
 function group(list){ const g=document.createElement('div'); g.className='group';
   list.forEach(([cls,txt,label])=>{ const c=document.createElement('div'); c.className='logo-card'; c.title=label;
     const l=document.createElement('div'); l.className='logo '+cls; l.textContent=txt;
@@ -107,7 +113,7 @@ function group(list){ const g=document.createElement('div'); g.className='group'
 function initMarquee(el, data, seconds, reverse=false){
   const lane=document.createElement('div'); lane.className='lane'; lane.style.setProperty('--dur', seconds+'s');
   if(reverse) lane.style.animationDirection='reverse';
-  lane.append(group(data), group(data));
+  lane.append(group(data), group(data)); // duplicate for seamless loop
   el.append(lane);
 }
 initMarquee(document.getElementById('mq-adobe'), Adobe, 22, false);
@@ -115,7 +121,12 @@ initMarquee(document.getElementById('mq-code'), Code, 24, true);
 initMarquee(document.getElementById('mq-general'), General, 28, false);
 
 // Projects
-const Projects=[{title:"Buxo",blurb:"SOL account-reclaiming memecoin tool with an active, trusted community.",tags:[{t:"Live",href:"https://buxohq.com/"}],link:"https://buxohq.com/",image:"https://images.unsplash.com/photo-1621768216002-5ac171876625?q=80&w=1200&auto=format&fit=crop"},{title:"Fav-Board",blurb:"Fast bookmarks board — pin, search & jump.",tags:[{t:"Live",href:"https://johannes61.github.io/Fav-Board/"},{t:"GitHub",href:"https://github.com/johannes61/Fav-Board"}],link:"https://johannes61.github.io/Fav-Board/",image:"https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop"},{title:"Repo-Radar",blurb:"Discover & track repositories at a glance.",tags:[{t:"Live",href:"https://johannes61.github.io/Repo-Radar/"},{t:"GitHub",href:"https://github.com/johannes61/Repo-Radar"}],link:"https://johannes61.github.io/Repo-Radar/",image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"},{title:"Ping-Board",blurb:"Minimal network pinger dashboard.",tags:[{t:"Live",href:"https://johannes61.github.io/Ping-Board/"},{t:"GitHub",href:"https://github.com/johannes61/Ping-Board"}],link:"https://johannes61.github.io/Ping-Board/",image:"https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop"}];
+const Projects=[
+  {title:"Buxo",blurb:"SOL account-reclaiming memecoin tool with an active, trusted community.",tags:[{t:"Live",href:"https://buxohq.com/"}],link:"https://buxohq.com/",image:"https://images.unsplash.com/photo-1621768216002-5ac171876625?q=80&w=1200&auto=format&fit=crop"},
+  {title:"Fav-Board",blurb:"Fast bookmarks board — pin, search & jump.",tags:[{t:"Live",href:"https://johannes61.github.io/Fav-Board/"},{t:"GitHub",href:"https://github.com/johannes61/Fav-Board"}],link:"https://johannes61.github.io/Fav-Board/",image:"https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop"},
+  {title:"Repo-Radar",blurb:"Discover & track repositories at a glance.",tags:[{t:"Live",href:"https://johannes61.github.io/Repo-Radar/"},{t:"GitHub",href:"https://github.com/johannes61/Repo-Radar"}],link:"https://johannes61.github.io/Repo-Radar/",image:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"},
+  {title:"Ping-Board",blurb:"Minimal network pinger dashboard.",tags:[{t:"Live",href:"https://johannes61.github.io/Ping-Board/"},{t:"GitHub",href:"https://github.com/johannes61/Ping-Board"}],link:"https://johannes61.github.io/Ping-Board/",image:"https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop"}
+];
 const grid=document.getElementById('projectGrid');
 function renderProjects(list){
   grid.innerHTML='';
@@ -132,7 +143,7 @@ renderProjects(Projects);
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}})},{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
-// Education progress — based on VIEWPORT CENTER
+// Education progress — driven by viewport CENTER
 const edu=document.getElementById('eduList');
 function updateEduProgress(){
   const rect=edu.getBoundingClientRect();
@@ -141,7 +152,7 @@ function updateEduProgress(){
   const progress = Math.min(1, Math.max(0, (center - top) / rect.height ));
   edu.style.setProperty('--edu-progress', (progress*100).toFixed(1));
 }
-updateEduProgress(); addEventListener('scroll',updateEduProgress,{passive:true}); addEventListener('resize',updateEduProgress,{passive:true});
+updateEduProgress(); addEventListener('scroll',updateEduProgress,{passive:true}); addEventListener('resize',updateEduProgress',{passive:true});
 
 // Contact form UX
 const form=document.getElementById('contactForm'); const note=document.getElementById('formNote');
@@ -154,7 +165,7 @@ document.getElementById('sendBtn').addEventListener('click', ()=>{
   form.reset();
 });
 
-// Footer helpers + visitors (open tabs counter)
+// Footer helpers + visitors (open tabs counter demo)
 document.getElementById('year').textContent=new Date().getFullYear();
 (function(){
   const KEY='__presence__', id=Math.random().toString(36).slice(2), ttl=15000, el=document.getElementById('visitorsCount');
