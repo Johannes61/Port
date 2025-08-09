@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Johannes Heller — Portfolio</title>
-  <meta name="description" content="Portfolio of Johannes Heller — developer, editor & graphic designer." />
   <meta name="color-scheme" content="light dark" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -13,34 +12,35 @@
 
   <!-- Header -->
   <header id="siteHeader">
-    <div class="container nav" id="nav">
-      <div class="brand"><span class="dot"></span> Johannes</div>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#education">Education</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <button id="qaBtn" class="qa-btn" aria-haspopup="dialog" aria-expanded="false" title="Quick access (Q)">
-        Quick Access <kbd>Q</kbd>
-      </button>
+    <div class="nav-shell"><!-- full width bar -->
+      <div class="nav-inner" id="nav"><!-- constrained content -->
+        <div class="brand"><span class="dot"></span> Johannes</div>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#education">Education</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button id="qaBtn" class="qa-btn" aria-haspopup="dialog" aria-expanded="false" title="Quick access (Q)">
+          Quick Access <kbd>Q</kbd>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Quick Actions Overlay (no box, blurred background) -->
+  <!-- Quick Actions Overlay -->
   <div id="qaOverlay" class="qa-overlay" aria-hidden="true">
     <div class="qa-sheet" role="dialog" aria-modal="true" aria-label="Quick actions">
       <div class="qa-head">
         <b>Action Center</b>
-        <button class="btn ghost" id="qaClose">Close</button>
+        <button class="btn ghost" id="qaClose" type="button">Close</button>
       </div>
-
       <div class="qa-actions">
         <button class="qaction" id="actTheme" data-on="0">
           <span class="qaction-title">Light Theme</span>
           <span class="qaction-state">Off</span>
-          <span class="qaction-hint">Toggle dark / light <span class="kbd">D</span></span>
+          <span class="qaction-hint">Toggle <span class="kbd">D</span></span>
         </button>
         <button class="qaction" id="actFocus" data-on="0">
           <span class="qaction-title">Focus</span>
@@ -53,7 +53,6 @@
           <span class="qaction-hint">Ease animations</span>
         </button>
       </div>
-
       <div class="qa-tips">
         <div>Open/Close</div><div><span class="kbd">Q</span> / <span class="kbd">Esc</span></div>
         <div>Light theme</div><div><span class="kbd">D</span></div>
@@ -79,7 +78,7 @@
       </div>
     </section>
 
-    <!-- Skills (3 seamless marquees; middle reversed) -->
+    <!-- Skills -->
     <section id="skills" class="container reveal">
       <div class="section-title">
         <h2>Skills</h2>
@@ -147,7 +146,7 @@
         </div>
         <div class="contact-actions">
           <div class="muted">Or email <a href="mailto:johannes@lilleblad.com" class="chip">johannes@lilleblad.com</a></div>
-          <button class="btn" id="sendBtn">Send message</button>
+          <button class="btn" id="sendBtn" type="button">Send message</button>
         </div>
         <p class="form-note" id="formNote" role="status" aria-live="polite"></p>
       </form>
