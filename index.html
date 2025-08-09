@@ -8,11 +8,7 @@
   <meta name="color-scheme" content="light dark" />
   <style>
     /* --- Theme & Base ---------------------------------------------------- */
-    :root{
-      --bg:#ffffff; --text:#0b1020; --muted:#5b647c; --card:#f5f7fb; --line:#e6e9f2;
-      --brand:#0a3dff; --brand-2:#00c263; --shadow:0 10px 30px rgba(2,17,79,.08);
-      --radius:18px; --radius-sm:12px;
-    }
+    :root{ --bg:#ffffff; --text:#0b1020; --muted:#5b647c; --card:#f5f7fb; --line:#e6e9f2; --brand:#0a3dff; --brand-2:#00c263; --shadow:0 10px 30px rgba(2,17,79,.08); --radius:18px; --radius-sm:12px; }
     :root.dark{ --bg:#0b0e14; --text:#e9eef7; --muted:#a3b0cc; --card:#111726; --line:#1b2340; --shadow:0 10px 30px rgba(0,0,0,.45); }
     *{box-sizing:border-box} html{scroll-behavior:smooth}
     body{margin:0;font:16px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
@@ -25,28 +21,20 @@
     .chip{display:inline-flex;align-items:center;padding:.35rem .6rem;border-radius:999px;background:linear-gradient(90deg,var(--line),transparent);border:1px solid var(--line);color:var(--muted);font-size:.8rem}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
 
-    /* --- Header / Nav ---------------------------------------------------- */
+    /* --- Header ---------------------------------------------------------- */
     header{position:sticky;top:12px;z-index:60}
-    .nav{margin:12px auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:.5rem;}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:color-mix(in oklab,var(--bg),transparent 20%);backdrop-filter:saturate(120%) blur(10px);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:.5rem .75rem;width:100%}
+    .nav{margin:12px auto}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;background:color-mix(in oklab,var(--bg),transparent 20%);backdrop-filter:saturate(120%) blur(10px);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:.5rem .75rem}
     .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.2px}
     .dot{width:10px;height:10px;border-radius:50%;background:var(--brand)}
-    .links{display:flex;gap:.25rem;align-items:center}
-    .links a{padding:.55rem .8rem;border-radius:10px}
-    .links a:hover{background:var(--card)}
     .right{display:flex;gap:.5rem;align-items:center}
 
-    /* Move menu to another page (simple link) */
-    .menu-link{display:inline-flex;align-items:center;gap:.45rem;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:.55rem .8rem;border-radius:10px}
-
-    /* --- Quick Access Button -------------------------------------------- */
+    /* --- Quick Access Button + Panel (under header) --------------------- */
     .qa-btn{display:inline-flex;align-items:center;gap:.45rem;background:var(--bg);border:1px solid var(--line);color:var(--text);padding:.55rem .8rem;border-radius:10px;cursor:pointer}
     .qa-btn kbd{border:1px solid var(--line);border-bottom-width:2px;padding:.05rem .35rem;border-radius:.35rem;background:var(--card);font-family:ui-monospace,Menlo,monospace;font-size:.78rem}
-
-    /* --- Quick Access Panel (Action Boxes + Backdrop) ------------------- */
     .qa-backdrop{position:fixed;inset:0;background:rgba(10,16,32,.55);backdrop-filter:blur(6px);display:none;z-index:70}
     .qa-backdrop.open{display:block}
-    .qa-panel{position:fixed;right:18px;top:82px;width:360px;max-width:calc(100% - 36px);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:14px;display:none;z-index:80}
+    .qa-panel{position:fixed;right:18px;top:86px;width:360px;max-width:calc(100% - 36px);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:14px;display:none;z-index:80}
     .qa-panel.open{display:block}
     .qa-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
     .action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -55,7 +43,7 @@
     .action .state{opacity:.9;font-weight:700}
 
     /* --- Focus mode ------------------------------------------------------ */
-    body.focus .links a, body.focus .qa-btn, body.focus .btn.ghost{opacity:.15;pointer-events:none}
+    body.focus .qa-btn{opacity:.15;pointer-events:none}
 
     /* --- Hero ------------------------------------------------------------ */
     .hero{padding:86px 0 36px}
@@ -63,12 +51,10 @@
     h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.08;margin:.4rem 0 1rem}
     .lead{font-size:1.06rem;color:var(--muted)}
 
-    /* --- Skills marquees (full-bleed, no boxes) ------------------------- */
-    .row-title{display:flex;align-items:center;justify-content:space-between;margin:14px 4px}
-    .row-title span{color:var(--muted);font-size:.95rem}
+    /* --- Skills marquees (full-bleed, no text) -------------------------- */
     .marquee-wrap{overflow:hidden;border:0;border-radius:0;background:transparent;margin-inline:calc(50% - 50vw);width:100vw}
     .marquee{display:flex;gap:12px;align-items:center;will-change:transform}
-    .marquee .track{display:flex;gap:12px;padding:10px}
+    .track{display:flex;gap:12px;padding:10px}
     .logo-card{display:flex;align-items:center;gap:10px;background:transparent;border:0;border-radius:12px;padding:8px 10px;min-width:180px}
     .logo{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-weight:800;color:#fff}
     .logo.ps{background:#001E36} .logo.ai{background:#330000} .logo.id{background:#49021F} .logo.ae{background:#00005B} .logo.pr{background:#2D1155} .logo.xd{background:#470137} .logo.lr{background:#001E36} .logo.fr{background:#0A84FF} .logo.acr{background:#C3002F}
@@ -85,19 +71,21 @@
     .project .meta h3{margin:0;font-size:1.05rem}
     @media (max-width: 1024px){.project{grid-column:span 12}}
 
-    /* --- Education timeline --------------------------------------------- */
-    .edu{position:relative;padding:8px 0 8px 0;margin-top:6px}
-    .edu-line{position:relative;height:4px;background:var(--line);border-radius:999px}
-    .edu-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;background:var(--brand);border-radius:50%;box-shadow:var(--shadow)}
-    .edu-item{position:relative;margin-top:14px}
-    .edu-item .label{position:absolute;transform:translateX(-50%);white-space:nowrap}
+    /* --- Education vertical timeline ------------------------------------ */
+    .edu-vertical{position:relative;margin:0;padding:0 0 0 28px;list-style:none}
+    .edu-vertical:before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--line)}
+    .edu-vertical li{position:relative;margin:14px 0;padding-left:2px}
+    .edu-vertical li:before{content:"";position:absolute;left:-6px;top:.45rem;width:12px;height:12px;border-radius:50%;background:var(--brand);box-shadow:var(--shadow)}
 
-    /* --- Sections & Utilities ------------------------------------------- */
+    /* --- Dynamic reveal -------------------------------------------------- */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease, transform .5s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    /* --- Sections -------------------------------------------------------- */
     section{padding:44px 0}
     .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
     .section-title h2{margin:0;font-size:1.6rem}
     .muted{color:var(--muted)}
-    @media (max-width: 900px){.links{display:none}}
   </style>
 </head>
 <body>
@@ -105,17 +93,13 @@
   <header class="container nav">
     <div class="nav-inner">
       <div class="brand"><span class="dot"></span> Johannes</div>
-      <div class="links" role="list">
-        <a class="menu-link" href="/menu.html">Menu →</a>
-      </div>
       <div class="right">
-        <a id="ghLink" class="btn ghost" href="https://github.com/your-handle" target="_blank" rel="noreferrer">GitHub</a>
         <button id="qaBtn" class="qa-btn" aria-haspopup="dialog" aria-expanded="false" title="Quick access (q)">Quick access <kbd>q</kbd></button>
       </div>
     </div>
   </header>
 
-  <!-- Quick Access Backdrop & Panel (near menu corner) -->
+  <!-- Quick Access under the header -->
   <div id="qaBackdrop" class="qa-backdrop" aria-hidden="true"></div>
   <aside id="qaPanel" class="qa-panel" role="dialog" aria-modal="false" aria-label="Quick access settings">
     <div class="qa-title"><b>Action Center</b><button class="btn ghost" id="qaClose">Close</button></div>
@@ -129,7 +113,7 @@
 
   <main id="main">
     <!-- Hero -->
-    <section class="container hero" id="about">
+    <section class="container hero reveal" id="about">
       <div class="eyebrow">Full‑stack Designer & Developer</div>
       <h1>Crafting fast, elegant web experiences.</h1>
       <p class="lead">I design and build modern, accessible products with a focus on performance, clarity, and feel. Based in Oslo, working globally.</p>
@@ -139,52 +123,43 @@
       </div>
     </section>
 
-    <!-- Skills (3 sliding rows, middle reverses) -->
+    <!-- Skills only (3 looping rows; middle reversed) -->
     <section class="container" id="skills">
-      <div class="section-title"><h2>Skills</h2><span class="muted">3 sliding rows · hover for names</span></div>
-
-      <div class="row-title"><b>Graphics & Adobe Suite</b><span>Photoshop · Illustrator · InDesign · After Effects · Premiere Pro · XD · Lightroom · Fresco · Acrobat</span></div>
-      <div class="marquee-wrap" data-speed="0.6"><div class="marquee" id="mq-adobe"></div></div>
-
-      <div class="row-title"><b>Web & Code</b><span>HTML · CSS · JavaScript · TypeScript · Python · Machine Learning · React · Next.js · Node.js · Databases</span></div>
-      <div class="marquee-wrap" data-speed="-0.5"><div class="marquee" id="mq-code"></div></div>
-
-      <div class="row-title"><b>General & Product</b><span>UX · UI · Accessibility · Performance · SEO · Git · Agile · Figma · Notion · Problem Solving</span></div>
-      <div class="marquee-wrap" data-speed="0.4"><div class="marquee" id="mq-general"></div></div>
+      <div class="marquee-wrap" data-speed="0.6"><div class="marquee reveal" id="mq-adobe"></div></div>
+      <div class="marquee-wrap" data-speed="-0.6"><div class="marquee reveal" id="mq-code"></div></div>
+      <div class="marquee-wrap" data-speed="0.5"><div class="marquee reveal" id="mq-general"></div></div>
     </section>
 
-    <!-- Projects (improved grid) -->
+    <!-- Projects -->
     <section class="container" id="projects">
       <div class="section-title"><h2>Selected Projects</h2><span class="muted">Curated highlights</span></div>
       <div class="grid" id="projectGrid"></div>
     </section>
 
-    <!-- Education (timeline) -->
+    <!-- Education (vertical line) -->
     <section class="container" id="education">
-      <div class="section-title"><h2>Education</h2><span class="muted">Start → Now</span></div>
+      <div class="section-title"><h2>Education</h2><span class="muted">Timeline</span></div>
       <div class="card" style="padding:16px">
-        <div class="edu">
-          <div class="edu-line" id="eduLine"></div>
-          <div class="edu-item"><div class="edu-dot" style="left:10%"></div><div class="label" style="left:10%;top:16px"><b>VG1</b> — Media & Information Technology — <i>Completed</i></div></div>
-          <div class="edu-item"><div class="edu-dot" style="left:40%"></div><div class="label" style="left:40%;top:16px"><b>VG2</b> — Media — <i>Completed</i></div></div>
-          <div class="edu-item"><div class="edu-dot" style="left:85%"></div><div class="label" style="left:85%;top:16px"><b>Folk High School</b> — Programming & Web Dev — <i>Now</i></div></div>
-        </div>
-        <div class="muted" style="margin-top:8px">“VG1/VG2” are Norwegian upper secondary year levels (Year 1/Year 2).</div>
+        <ol class="edu-vertical">
+          <li><b>VG1</b> — Media & Information Technology — <i>Completed</i></li>
+          <li><b>VG2</b> — Media — <i>Completed</i></li>
+          <li><b>Folk High School</b> — Programming & Web Development — <i>Current</i></li>
+        </ol>
       </div>
     </section>
 
     <!-- Contact -->
     <section class="container" id="contact">
       <div class="section-title"><h2>Contact</h2><span class="muted">I usually reply within a day</span></div>
-      <form class="card" id="contactForm" style="padding:16px" onsubmit="return false" aria-label="Contact form">
+      <form class="card reveal" id="contactForm" style="padding:16px" onsubmit="return false" aria-label="Contact form">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
           <input class="chip" required placeholder="Name" name="name" />
           <input class="chip" required type="email" placeholder="Email" name="email" />
           <input class="chip" placeholder="Company (optional)" name="company" />
           <input class="chip" placeholder="Subject" name="subject" />
-          <textarea class="chip" required placeholder="Message" name="message" style="min-height:140px"></textarea>
+          <textarea class="chip" required placeholder="Message" name="message" style="min-height:160px;grid-column:1 / -1"></textarea>
         </div>
-        <div style="display:flex;gap:.6rem;justify-content:space-between;align-items:center;margin-top:10px">
+        <div style="display:flex;gap:.6rem;justify-content:space-between;align-items:center;margin-top:10px;flex-wrap:wrap">
           <div class="muted">Or email <a href="mailto:johannes@lilleblad.com" class="chip">johannes@lilleblad.com</a></div>
           <button class="btn" id="sendBtn">Send message</button>
         </div>
@@ -196,7 +171,7 @@
     // --- Boot theme from localStorage ------------------------------------
     const html = document.documentElement; const savedTheme = localStorage.getItem('theme'); if(savedTheme==='dark') html.classList.add('dark');
 
-    // --- Quick Access (action boxes + backdrop + blur) -------------------
+    // --- Quick Access under header ---------------------------------------
     const qaBtn = document.getElementById('qaBtn');
     const qaPanel = document.getElementById('qaPanel');
     const qaClose = document.getElementById('qaClose');
@@ -212,40 +187,44 @@
     qaBackdrop.addEventListener('click', ()=> openQA(false));
     document.addEventListener('keydown', (e)=>{ if(e.key.toLowerCase()==='q'){ openQA(!qaPanel.classList.contains('open')); } if(e.key==='Escape'){ openQA(false);} });
 
+    function positionQA(){ const hdr = document.querySelector('header'); const rect = hdr.getBoundingClientRect(); const top = rect.bottom + window.scrollY + 8; qaPanel.style.top = top + 'px'; }
+    window.addEventListener('resize', positionQA, {passive:true}); window.addEventListener('scroll', positionQA, {passive:true}); positionQA();
+
     const setActive = (btn, on)=>{ btn.classList.toggle('active', on); btn.querySelector('.state').textContent = on?'On':'Off'; };
     const initAction = (key, btn, apply)=>{ const on = localStorage.getItem(key)==='1'; setActive(btn, on); if(on) apply(true); btn.addEventListener('click',()=>{ const next=!btn.classList.contains('active'); setActive(btn,next); apply(next); localStorage.setItem(key, next?'1':'0'); }); };
 
-    // Theme
+    // Theme / Focus / Motion / Grid
     initAction('pref_theme_dark', actDark, (on)=>{ html.classList.toggle('dark', on); localStorage.setItem('theme', on?'dark':'light'); });
-
-    // Focus
     initAction('pref_focus', actFocus, (on)=>{ document.body.classList.toggle('focus', on); });
-
-    // Reduce motion
     initAction('pref_reduce_motion', actMotion, (on)=>{ document.documentElement.style.setProperty('--prefers-reduced-motion', on?'reduce':'no-preference'); });
-
-    // Layout grid
     const applyGrid=(on)=>{ document.body.style.backgroundImage = on ? 'linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px)' : ''; document.body.style.backgroundSize = on ? '24px 24px' : ''; };
     initAction('pref_grid', actGrid, applyGrid);
 
-    // --- Skills marquees (true seamless loop, middle reversed) ----------
+    // --- Skills marquees (seamless loop; middle reversed) ----------------
     const Adobe = [ ['ps','Ps','Photoshop'], ['ai','Ai','Illustrator'], ['id','Id','InDesign'], ['ae','Ae','After Effects'], ['pr','Pr','Premiere Pro'], ['xd','Xd','Adobe XD'], ['lr','Lr','Lightroom'], ['fr','Fr','Fresco'], ['acr','Ac','Acrobat'] ];
     const Code = [ ['html','HTML','HTML5'], ['css','CSS','CSS3'], ['js','JS','JavaScript'], ['ts','TS','TypeScript'], ['py','Py','Python'], ['ml','ML','Machine Learning'], ['react','⚛','React'], ['next','N','Next.js'], ['node','Nd','Node.js'], ['db','DB','PostgreSQL'] ];
     const General = [ ['gen','UX','UX'], ['gen','UI','UI'], ['gen','A11y','Accessibility'], ['gen','Perf','Performance'], ['gen','SEO','SEO'], ['gen','Git','Git'], ['gen','Agile','Agile'], ['gen','Fig','Figma'], ['gen','Nt','Notion'], ['gen','Solve','Problem Solving'] ];
 
-    function buildTrack(list){ const t=document.createElement('div'); t.className='track'; list.forEach(([cls,txt,label])=>{ const card=document.createElement('div'); card.className='logo-card'; card.title=label; const logo=document.createElement('div'); logo.className='logo '+cls; logo.textContent=txt; const name=document.createElement('div'); name.textContent=label; name.className='muted'; card.appendChild(logo); card.appendChild(name); t.appendChild(card); }); return t; }
-
-    function initMarquee(el, data, speed){
-      const t1=buildTrack(data), t2=buildTrack(data); el.appendChild(t1); el.appendChild(t2);
-      let x=0; function step(){
-        if(getComputedStyle(document.documentElement).getPropertyValue('--prefers-reduced-motion').includes('reduce')) return;
-        x += speed; const w=t1.scrollWidth; if(speed>0 && x>=w) x=0; if(speed<0 && x<=-w) x=0; el.style.transform=`translateX(${x}px)`; requestAnimationFrame(step);
-      } requestAnimationFrame(step);
+    function buildTrack(list){
+      const t=document.createElement('div'); t.className='track';
+      // Duplicate enough to exceed 2x viewport for smooth wrap
+      const baseWidth = list.length*190; const reps = Math.max(3, Math.ceil((window.innerWidth*2)/baseWidth));
+      for(let r=0;r<reps;r++) list.forEach(([cls,txt,label])=>{ const card=document.createElement('div'); card.className='logo-card'; card.title=label; const logo=document.createElement('div'); logo.className='logo '+cls; logo.textContent=txt; const name=document.createElement('div'); name.textContent=label; name.className='muted'; card.appendChild(logo); card.appendChild(name); t.appendChild(card); });
+      return t;
     }
 
-    initMarquee(document.getElementById('mq-adobe'), Adobe, parseFloat(document.querySelector('#mq-adobe').closest('.marquee-wrap').dataset.speed));
-    initMarquee(document.getElementById('mq-code'), Code, parseFloat(document.querySelector('#mq-code').closest('.marquee-wrap').dataset.speed));
-    initMarquee(document.getElementById('mq-general'), General, parseFloat(document.querySelector('#mq-general').closest('.marquee-wrap').dataset.speed));
+    function initMarquee(el, data, pxPerSec){
+      const track = buildTrack(data); el.appendChild(track);
+      let x = 0; let last = performance.now(); const dir = pxPerSec>=0?1:-1; const speed = Math.abs(pxPerSec);
+      function loop(now){
+        const dt = (now - last)/1000; last = now; x -= dir*speed*dt; const w = track.scrollWidth; if(x <= -w) x += w; if(x >= w) x -= w; el.style.transform = `translateX(${x}px)`; requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    }
+
+    initMarquee(document.getElementById('mq-adobe'), Adobe, 60);
+    initMarquee(document.getElementById('mq-code'), Code, -55);
+    initMarquee(document.getElementById('mq-general'), General, 45);
 
     // --- Projects ---------------------------------------------------------
     const ProjectData = [
@@ -254,8 +233,12 @@
       {title:"Wayfinding — Seiersborg", blurb:"Interactive gallery with responsive grid, crisp typography, and motion.", tags:["Frontend","Design"], link:"#", image:"https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=1200&auto=format&fit=crop"}
     ];
     const grid=document.getElementById('projectGrid');
-    function renderProjects(list){ grid.innerHTML=''; list.forEach(p=>{ const art=document.createElement('article'); art.className='project'; art.innerHTML=`<a class="thumb" href="${p.link}" target="_blank" rel="noreferrer"><img alt="${p.title}" src="${p.image}"/></a><div class="meta"><h3>${p.title}</h3><div class="muted">${p.tags.join(' · ')}</div></div><p class="muted">${p.blurb}</p>`; grid.appendChild(art); }); }
+    function renderProjects(list){ grid.innerHTML=''; list.forEach(p=>{ const art=document.createElement('article'); art.className='project reveal'; art.innerHTML=`<a class=\"thumb\" href=\"${p.link}\" target=\"_blank\" rel=\"noreferrer\"><img alt=\"${p.title}\" src=\"${p.image}\"/></a><div class=\"meta\"><h3>${p.title}</h3><div class=\"muted\">${p.tags.join(' · ')}</div></div><p class=\"muted\">${p.blurb}</p>`; grid.appendChild(art); }); }
     renderProjects(ProjectData);
+
+    // --- Reveal on scroll -------------------------------------------------
+    const io = new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } }); }, {threshold:.2});
+    document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
 
     // --- Contact demo -----------------------------------------------------
     document.getElementById('sendBtn').addEventListener('click', ()=>{ const form=document.getElementById('contactForm'); const data=Object.fromEntries(new FormData(form).entries()); if(!(data.name && data.email && data.message)){ alert('Please fill in your name, email, and message.'); return; } alert('Thanks '+data.name+'! Your message has been queued.'); form.reset(); });
