@@ -252,3 +252,18 @@ document.getElementById('year').textContent = new Date().getFullYear();
   tick(); setInterval(tick,4000);
   addEventListener('beforeunload',()=>{const m=read(); delete m[id]; write(m)});
 })();
+
+// Header hide on scroll
+const header = document.getElementById('siteHeader');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const current = window.scrollY;
+  if (current > lastScroll && current > 80) {
+    header.classList.add('header-hidden');
+    header.classList.remove('header-visible');
+  } else {
+    header.classList.add('header-visible');
+    header.classList.remove('header-hidden');
+  }
+  lastScroll = current;
+});
